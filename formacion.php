@@ -87,6 +87,62 @@
         </div>
     </nav>
     <!-- Fin de navbar -->
-    <script src="./main.js"></script>
+
+    <!-- Main container -->
+    <div class="container mx-auto p-10">
+        <h1 class="text-5xl text-psipeDarkGray mb-7 text-center">Cursos</h1>
+        <!-- Course Cards Container-->
+        <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-5 justify-items-center">
+            <div class="max-w-sm rounded-lg overflow-hidden shadow-lg duration-500 bg-gray-100 hover:shadow-2xl hover:-translate-y-2 hover:scale-80">
+                <img class="w-full h-1/2" src="./img/lenguaje.webp" alt="Sunset in the mountains">
+                <div class="px-6 py-4">
+                    <div class="font-bold text-xl mb-2">Diplomado Terapia de Lenguaje Aplicada</div>
+                    <p class="text-gray-700 text-base">
+                        Duración: 80 horas 
+                    </p>
+                    <p class="text-gray-700 text-base">
+                        Imparte:  Ángela Patiño Alvarado 
+                    </p>
+                    <p class="text-gray-700 text-base">
+                        <a href="#">Conoce a nuestra ponente</a>
+                    </p>
+                </div>
+                <div class="px-6 pt-4 pb-5">
+                    <a href="./course-view.php" class="bg-psipeBlue hover:hover:bg-psipeGray text-white font-bold py-2 px-4 rounded-full">
+                        Ver Más
+                    </a>
+                </div>
+            </div>
+            <div class="max-w-sm rounded-lg overflow-hidden shadow-lg duration-500 bg-gray-100 hover:shadow-2xl hover:-translate-y-2 hover:scale-80">
+                <img class="w-full h-1/2" src="./img/psipeLogo.png" alt="Sunset in the mountains">
+                <div class="px-6 py-4">
+                    <div class="font-bold text-xl mb-2">Diplomado Terapia de Lenguaje Aplicada</div>
+                    <p class="text-gray-700 text-base">
+                        Descripción del diplomado
+                    </p>
+                </div>
+                <div class="px-6 pt-4 pb-5">
+                    <button class="bg-psipeBlue hover:bg-psipeGray text-white font-bold py-2 px-4 rounded-full">
+                        Ver Más
+                    </button>
+                </div>
+            </div>
+            <div class="max-w-sm rounded-lg overflow-hidden shadow-lg duration-500 bg-gray-100 hover:shadow-2xl hover:-translate-y-2 hover:scale-80">
+                <img class="w-full h-1/2" src="./img/lenguaje.webp" alt="Sunset in the mountains">
+                <div class="px-6 py-4">
+                    <div class="font-bold text-xl mb-2">Diplomado Terapia de Lenguaje Aplicada</div>
+                    <p class="text-gray-700 text-base">
+                        Descripción del diplomado 
+                    </p>
+                </div>
+                <div class="px-6 pt-4 pb-5">
+                    <button class="bg-psipeBlue hover:bg-psipeGray text-white font-bold py-2 px-4 rounded-full">
+                        Ver Más
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./main.js" ></script>
 </body>
 </html>

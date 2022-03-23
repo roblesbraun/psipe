@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./tailwind.css">
 </head>
 <body>
-    <!-- Navbar -->
+   <!-- Navbar -->
     <!-- navbar goes here -->
     <nav class="bg-psipeGreen">
         <div class="px-3 mx-auto">
@@ -87,6 +87,73 @@
         </div>
     </nav>
     <!-- Fin de navbar -->
+    
+    <!-- Main Container -->
+    <div class="container mx-auto p-10">
+        <h1 class="text-3xl text-center">Terapia de Lenguaje Aplicada</h1>
+        <!-- Container tablas, biblioteca, sesiones en vivo -->
+        <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 md:grid-cols-2 justify-center mt-7">
+            <table class="rounded-t-lg w-full mx-auto bg-psipeGreen text-gray-800 text-center text-sm">
+                <tr class="border-b-2 border-gray-300">
+                    <th class="px-4 py-3">Imparte</th>
+                    <th class="px-4 py-3">Ángela Patiño Alvarado</th>
+                </tr>
+                <tr class="bg-white border-b border-gray-200">
+                    <td class="px-4 py-3">Día</td>
+                    <td class="px-4 py-3">7:00 a 9:00 p.m.</td>
+                </tr> 
+                <tr class="bg-gray-100 border-b border-gray-200">
+                    <td class="px-4 py-3">Horas presenciales</td>
+                    <td class="px-4 py-3">40</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-200">
+                    <td class="px-4 py-3">Horas asíncronas</td>
+                    <td class="px-4 py-3">40</td>
+                </tr>
+                <tr class="bg-gray-100 border-b border-gray-200">
+                    <td class="px-4 py-3">Número de clases</td>
+                    <td class="px-4 py-3">20</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-200">
+                    <td class="px-4 py-3">Inicio</td>
+                    <td class="px-4 py-3">Marzo 2022</td>
+                </tr>
+                <tr class="bg-gray-100 border-b-2 border-gray-200">
+                    <td class="px-4 py-3">Término</td>
+                    <td class="px-4 py-3">Julio 2022</td>
+                </tr>
+            </table>
+            <div class="grid grid-rows-2 space-y-4">
+                <div class="bg-psipeGreen rounded-lg p-5">
+                    <h1 class="text-2xl">Biblioteca</h1>
+                    <p>En esta sección encontraras material de apoyo para tu estudio</p>
+                </div>
+                <div class="">
+                    <table class="rounded-t-lg w-full mx-auto bg-psipeGreen text-gray-800 text-center text-sm">
+                        <tr class="border-b-2 border-gray-300">
+                            <th class="px-4 py-3">Sesiónes en vivo </th>
+                            <th class="px-4 py-3">22/02/2022</th>
+                        </tr>
+                        <tr class="bg-white border-b border-gray-200">
+                            <td class="px-4 py-3">Enlace</td>
+                            <td class="px-4 py-3"> <a href="">Haz click aqui!</a> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Modulo y sus temarios -->
+        <div class="mt-10">
+            <a href="./module-view.php" class="bg-psipeGreen p-2 rounded-lg text-xl">Módulo 1: Bases de la intervención logopédica</a>
+            <p class="mt-3 mb-5">Clases 1 - 3</p>
+            <p class="flex items-center space-x-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
+                </svg>
+                <span>A. Bases de la intervención terapeutica en la comunicacion y el lenguaje</span>
+            </p>
+        </div>
+    </div>
     <script src="./main.js"></script>
 </body>
 </html>

@@ -87,6 +87,18 @@
         </div>
     </nav>
     <!-- Fin de navbar -->
-    <script src="./main.js"></script>
+
+    <!-- Main container -->
+    <div class="container mx-auto p-10">
+        <h1 class="text-3xl text-psipeDarkGray mb-7 text-center">Nombre del Diplomado</h1>
+        <h1 class="text-2xl text-psipeGreen mb-7">Nombre del módulo</h1>
+        <!-- Container clases -->
+        <div class="grid grid-cols-3 gap-7">
+            <a href="./class-view.php" class="bg-psipeGreen text-xl p-3 rounded-lg text-center">Clase 1</a>
+            <a href="" class="bg-psipeGreen text-xl p-3 rounded-lg text-center">Clase 2</a>
+            <a href="" class="bg-psipeGreen text-xl p-3 rounded-lg text-center">Clase 3</a>
+        </div>
+    </div>
+    <script src="./main.js" ></script>
 </body>
 </html>

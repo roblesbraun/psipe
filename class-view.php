@@ -87,6 +87,41 @@
         </div>
     </nav>
     <!-- Fin de navbar -->
-    <script src="./main.js"></script>
+
+    <!-- Main container -->
+    <div class="container mx-auto p-10">
+        <h1 class="text-3xl text-psipeDarkGray mb-7 text-center">Nombre del Diplomado</h1>
+        <h1 class="text-2xl text-psipeBlue mb-2">Nombre del módulo</h1>
+        <h1 class="text-xl mb-7">Clase 1</h1>
+        <!-- Container video y biblioteca -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-7">
+            <div class="space-y-5">
+                <div>
+                    <h1 class="text-xl text-psipeBlue">Vídeo de la Sesión</h1>
+                    <iframe class="w-full h-80" src="https://www.youtube.com/embed/9sau80kT2ic" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div>
+                    <h1 class="text-xl text-psipeBlue">Presentación</h1>
+                    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSyyFLC7hCGvgMzGw85HU2A959z8oZoBfG_dQqu-FwgoCNu7xV3XpIrw-CQ9TVTRw6FZITY2hLxba82/embed?start=false&loop=true&delayms=3000" frameborder="0" class="w-full h-80" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                </div>
+            </div>    
+            <div class="bg-psipeGreen rounded-lg p-4">
+                <h1 class="text-2xl mb-3">Biblioteca</h1>
+                <p class="flex items-center space-x-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
+                    </svg>
+                    <span>Recurso 1</span>
+                </p>
+                <p class="flex items-center space-x-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
+                    </svg>
+                    <span>Recurso 2</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="./main.js" ></script>
 </body>
 </html>
