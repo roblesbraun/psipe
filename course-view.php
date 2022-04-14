@@ -1,10 +1,17 @@
+<?php
+    include('./manage/connection.php');
+    $idCurso = $_GET['idCurso'];
+    $query = "SELECT * FROM cursos WHERE idCurso = $idCurso";
+    $result = mysqli_query($conn, $query);
+    $curso = mysqli_fetch_array($result);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Detalles del Curso</title>
     <link rel="stylesheet" href="./tailwind.css">
 </head>
 <body>
@@ -90,68 +97,89 @@
     
     <!-- Main Container -->
     <div class="container mx-auto p-10">
-        <h1 class="text-3xl text-center">Terapia de Lenguaje Aplicada</h1>
+        <h1 class="text-3xl text-center"><?php echo $curso['nombre'] ?></h1>
         <!-- Container tablas, biblioteca, sesiones en vivo -->
         <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 md:grid-cols-2 justify-center mt-7">
             <table class="rounded-t-lg w-full mx-auto bg-psipeGreen text-gray-800 text-center text-sm">
                 <tr class="border-b-2 border-gray-300">
                     <th class="px-4 py-3">Imparte</th>
-                    <th class="px-4 py-3">Ángela Patiño Alvarado</th>
+                    <th class="px-4 py-3"><?php echo $curso['docente'] ?></th>
                 </tr>
                 <tr class="bg-white border-b border-gray-200">
                     <td class="px-4 py-3">Día</td>
-                    <td class="px-4 py-3">7:00 a 9:00 p.m.</td>
-                </tr> 
+                    <td class="px-4 py-3"><?php echo $curso['dia'] ?></td>
+                </tr>
+                <tr class="bg-white border-b border-gray-200">
+                    <td class="px-4 py-3">Horario</td>
+                    <td class="px-4 py-3"><?php echo $curso['horario'] ?></td>
+                </tr>
                 <tr class="bg-gray-100 border-b border-gray-200">
                     <td class="px-4 py-3">Horas presenciales</td>
-                    <td class="px-4 py-3">40</td>
+                    <td class="px-4 py-3"><?php echo $curso['horasPresenciales'] ?></td>
                 </tr>
                 <tr class="bg-white border-b border-gray-200">
                     <td class="px-4 py-3">Horas asíncronas</td>
-                    <td class="px-4 py-3">40</td>
+                    <td class="px-4 py-3"><?php echo $curso['horasAsincronas'] ?></td>
                 </tr>
                 <tr class="bg-gray-100 border-b border-gray-200">
                     <td class="px-4 py-3">Número de clases</td>
-                    <td class="px-4 py-3">20</td>
+                    <td class="px-4 py-3"><?php echo $curso['numeroClases'] ?></td>
                 </tr>
                 <tr class="bg-white border-b border-gray-200">
                     <td class="px-4 py-3">Inicio</td>
-                    <td class="px-4 py-3">Marzo 2022</td>
+                    <td class="px-4 py-3"><?php echo $curso['fechaInicio'] ?></td>
                 </tr>
                 <tr class="bg-gray-100 border-b-2 border-gray-200">
                     <td class="px-4 py-3">Término</td>
-                    <td class="px-4 py-3">Julio 2022</td>
+                    <td class="px-4 py-3"><?php echo $curso['fechaTermino'] ?></td>
                 </tr>
             </table>
             <div class="grid grid-rows-2 space-y-4">
                 <div class="bg-psipeGreen rounded-lg p-5">
                     <h1 class="text-2xl">Biblioteca</h1>
                     <p>En esta sección encontraras material de apoyo para tu estudio</p>
+                    <p>Material Principal</p>
+                    <p>Material Complementario</p>
                 </div>
                 <div class="">
                     <table class="rounded-t-lg w-full mx-auto bg-psipeGreen text-gray-800 text-center text-sm">
-                        <tr class="border-b-2 border-gray-300">
-                            <th class="px-4 py-3">Sesiónes en vivo </th>
-                            <th class="px-4 py-3">22/02/2022</th>
+                        <tr class="border-b-2 border-gray-300 col-span-2">
+                            <th class="px-4 py-3" colspan="2">Sesiones en vivo</th>
                         </tr>
                         <tr class="bg-white border-b border-gray-200">
                             <td class="px-4 py-3">Enlace</td>
-                            <td class="px-4 py-3"> <a href="">Haz click aqui!</a> </td>
+                            <td class="px-4 py-3"> <a href="<?php echo $curso['linkClase'] ?>">Haz click aqui!</a> </td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
         <!-- Modulo y sus temarios -->
-        <div class="mt-10">
-            <a href="./module-view.php" class="bg-psipeGreen p-2 rounded-lg text-xl">Módulo 1: Bases de la intervención logopédica</a>
-            <p class="mt-3 mb-5">Clases 1 - 3</p>
-            <p class="flex items-center space-x-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
-                </svg>
-                <span>A. Bases de la intervención terapeutica en la comunicacion y el lenguaje</span>
-            </p>
+        <div class="mt-10 flex flex-col lg:w-1/2">
+            <?php
+                $queryModulos = "SELECT nombre, rangoClases, idModulo FROM modulos WHERE idCurso = $idCurso";
+                $result = mysqli_query($conn, $queryModulos);
+                while ($modulos = mysqli_fetch_array($result)){
+                    echo '<a href="./module-view.php?idModulo='.$modulos['idModulo'].'" class="bg-psipeGreen p-2 rounded-lg text-xl mt-7">'.$modulos['nombre'].'</a>';
+                    echo '<p class="mt-3 mb-5">'.$modulos['rangoClases'].'</p>';
+                    // echo '<p class="flex items-center space-x-3">';
+                        $queryTemarios = "SELECT nombre FROM temarioModulos WHERE idModulo = ".$modulos['idModulo'].";";
+                        $resultTemarios = mysqli_query($conn, $queryTemarios);
+                        while ($temas = mysqli_fetch_array($resultTemarios)) {
+                            echo '<p class="flex items-center space-x-3">';
+                                echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">';
+                                    echo '<path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />';
+                                echo '</svg>';
+                                echo '<span>'.$temas['nombre'].'</span>';
+                            echo '</p>';
+                        }
+                        // echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">';
+                        //     echo '<path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />';
+                        // echo '</svg>';
+                        // echo '<span>'.$modulos['rangoClases'].'</span>';
+                    // echo '</p>';
+                }
+            ?>
         </div>
     </div>
     <script src="./main.js"></script>

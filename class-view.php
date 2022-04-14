@@ -1,10 +1,25 @@
+<?php
+    include('./manage/connection.php');
+    $idClase = $_GET['idClase'];
+    $query = "SELECT * FROM clases WHERE idClase = $idClase";
+    $result = mysqli_query($conn, $query);
+    $clase = mysqli_fetch_array($result);
+    //Nombre del Modulo
+    $queryModulo = "SELECT nombre, idCurso FROM modulos WHERE idModulo = ".$clase['idModulo'].";";
+    $resultModulo = mysqli_query($conn, $queryModulo);
+    $modulo = mysqli_fetch_array($resultModulo);
+    //Nombre de la clase
+    $queryCurso = "SELECT nombre FROM cursos WHERE idCurso = ".$modulo['idCurso'].";";
+    $resultCurso = mysqli_query($conn, $queryCurso);
+    $curso = mysqli_fetch_array($resultCurso);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?php echo $clase['nombre'] ?></title>
     <link rel="stylesheet" href="./tailwind.css">
 </head>
 <body>
@@ -90,19 +105,19 @@
 
     <!-- Main container -->
     <div class="container mx-auto p-10">
-        <h1 class="text-3xl text-psipeDarkGray mb-7 text-center">Nombre del Diplomado</h1>
-        <h1 class="text-2xl text-psipeBlue mb-2">Nombre del módulo</h1>
-        <h1 class="text-xl mb-7">Clase 1</h1>
+        <h1 class="text-3xl text-psipeDarkGray mb-7 text-center"><?php echo $curso['nombre'] ?></h1>
+        <h1 class="text-2xl text-psipeBlue mb-2">Modulo: <?php echo $modulo['nombre'] ?></h1>
+        <h1 class="text-xl mb-7"><?php echo $clase['nombre'] ?></h1>
         <!-- Container video y biblioteca -->
         <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-7">
             <div class="space-y-5">
                 <div>
                     <h1 class="text-xl text-psipeBlue">Vídeo de la Sesión</h1>
-                    <iframe class="w-full h-80" src="https://www.youtube.com/embed/9sau80kT2ic" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class="w-full h-80" src="<?php echo $clase['video'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div>
                     <h1 class="text-xl text-psipeBlue">Presentación</h1>
-                    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSyyFLC7hCGvgMzGw85HU2A959z8oZoBfG_dQqu-FwgoCNu7xV3XpIrw-CQ9TVTRw6FZITY2hLxba82/embed?start=false&loop=true&delayms=3000" frameborder="0" class="w-full h-80" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                    <iframe src="<?php echo $clase['presentacion'] ?>" frameborder="0" class="w-full h-80" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
                 </div>
             </div>    
             <div class="bg-psipeGreen rounded-lg p-4">
