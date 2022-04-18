@@ -54,10 +54,28 @@
         $idCurso = $modulo['idCurso'];
     }
     //Para eliminar una clase
+    //Checamos que no tenga ni imagenes, ni archivos...
+    $canDelete = 0;
+    $errorMessage = '';
     if(isset($_POST['eliminar'])){
+        $canDelete = 0;
+        $errorMessage = '';
         foreach ($_POST['idClase'] as $idClase) {
-            $query = "DELETE FROM clases WHERE idClase = $idClase;";
-            $resultElim = mysqli_query($conn, $query);
+            $queryImgs = "SELECT * FROM carruselClase WHERE idClase = $idClase;";
+            $resultImgs = mysqli_query($conn, $queryImgs);
+            $queryBiblio = "SELECT * FROM bibliotecaClase WHERE idClase = $idClase;";
+            $resultBiblio = mysqli_query($conn, $queryBiblio);
+            if (mysqli_num_rows($resultImgs)>0 or mysqli_num_rows($resultBiblio)>0) {
+                $canDelete = 1;
+                $errorMessage = '<p class="text-red-500 text-center">No se puede eliminar, ya que una o mas clases, tienen archivos y/o imagenes sin eliminar.</p>';
+                break;
+            }
+        }
+        if ($canDelete == 0) {
+            foreach ($_POST['idClase'] as $idClase) {
+                $query = "DELETE FROM clases WHERE idClase = $idClase;";
+                $resultElim = mysqli_query($conn, $query);
+            }
         }
     }
 ?>
@@ -182,7 +200,8 @@
         </form>
         <!-- Despliegue de cursos actuales para poder eliminarlos -->
         <form action="" method="post">
-            <p class="text-lg text-center font-bold m-5">Modulos</p>
+            <p class="text-lg text-center font-bold m-5">Clases</p>
+            <?php echo $errorMessage;?>
             <table class="rounded-t-lg m-5 mx-auto bg-gray-200 text-gray-800 w-full">
                 <tr class="text-left border-b-2 border-gray-300">
                     <th class="px-4 py-5">ID</th>

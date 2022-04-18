@@ -8,11 +8,9 @@
     $result = mysqli_query($conn, $query);
     $modulo = mysqli_fetch_array($result);
     $idModulo = $modulo['idModulo'];
-    $nombreClase = '';
-    $presentacion = '';
-    $video = '';
     $query = "SELECT idClase, nombre, presentacion, video, idModulo FROM clases WHERE idModulo = $idModulo ORDER BY idClase limit 1;";
     $result = mysqli_query($conn, $query);
+    $idClase = '';
     // if (mysqli_num_rows($result) > 0) {
     //     $clase = mysqli_fetch_array($result);
     //     $idClase = $clase['idClase'];
@@ -25,22 +23,28 @@
     //     $presentacion = '';
     //     $video = '';
     // }
-    //Para editar clase...
+    //Para agregar archivo de clase...
     if(isset($_POST['submit'])){
-        $idClase = $_POST['clase'];
-        $nombreClase = $_POST['nombreClase'];
-        $presentacion = $_POST['presentacion'];
-        $video = $_POST['video'];
-        $findMe = 'https://www.youtube.com/embed/';
-        $editedVideo = strpos($video, $findMe);
-        if ($editedVideo === false) {
-            $videoYT = 'https://www.youtube.com/embed/'.substr($video, 32, strlen($video)-1);
-        }
-        else {
-            $videoYT = $video = $_POST['video'];
-        }
-        $query = "UPDATE clases SET nombre = '$nombreClase', presentacion = '$presentacion', video = '$videoYT' WHERE idClase = $idClase;";
+        $idClase = $_POST['idClase'];
+        $nombreArchivo = $_POST['nombre'];
+        $archivo = $_FILES['archivo']['name'];
+        $tmpArchivo = $_FILES['archivo']['tmp_name'];
+        $query = "INSERT INTO bibliotecaClase (nombre, rutaArchivo, idClase) VALUES ('$nombreArchivo', 1, $idClase);";
         $result = mysqli_query($conn, $query);
+        $query = "SELECT idArchivo FROM bibliotecaClase ORDER BY idArchivo desc limit 1";
+        $result = mysqli_query($conn, $query);
+        $idArchivo = '';
+        if (mysqli_num_rows($result)>0) {
+            while ($row = mysqli_fetch_array($result)){
+                $idArchivo = $row[0];
+            }
+        }
+        $query = "UPDATE bibliotecaClase SET rutaArchivo = '".$idArchivo."-".$archivo."' WHERE idArchivo = ".$idArchivo.";";
+        if (!mysqli_query($conn, $query)) {
+            die('Error: ' . mysqli_error($conn));
+        }
+        move_uploaded_file($tmpArchivo, '../img/bibliotecaClase/'.$idArchivo.'-'.$archivo);
+        header("Location: add-delete-class-files.php", true, 303);
     }
     //Para cambiar de curso...
     if(isset($_POST['curso'])){
@@ -84,6 +88,18 @@
         $result = mysqli_query($conn, $query);
         $curso = mysqli_fetch_array($result);
         $idCurso = $curso['idCurso'];
+    }
+    //Para eliminar un archivo de una clase
+    if(isset($_POST['eliminar'])){
+        foreach ($_POST['idArchivo'] as $idArchivo) {
+            $query= "SELECT rutaArchivo FROM bibliotecaClase WHERE idArchivo = $idArchivo;";
+            $result = mysqli_query($conn, $query);
+            $rutaArchivo = mysqli_fetch_array($result);
+            unlink('../img/bibliotecaClase/'.$rutaArchivo['rutaArchivo'].'');
+            $query = "DELETE FROM bibliotecaClase WHERE idArchivo = $idArchivo;";
+            $resultElim = mysqli_query($conn, $query);
+        }
+        header("Location: add-delete-class-files.php", true, 303);
     }
 ?>
 <!DOCTYPE html>
@@ -143,7 +159,7 @@
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z" clip-rule="evenodd" />
             </svg>
         </a>
-        <h1 class="text-2xl text-center mb-5">Editar Clases</h1>
+        <h1 class="text-2xl text-center mb-5">Agregar/Eliminar archivos de Clases</h1>
         <!-- FORM -->
         <form action="" method="post" class="mb-6">
             <div class="mb-6">
@@ -205,22 +221,45 @@
                 </select>
             </div>
         </form>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <div class="mb-6">
-                <label for="nombreClase" class="block mb-2 text-sm font-medium text-psipeGray">Nombre de la Clase</label>
-                <input type="text" name="nombreClase" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="" value="<?php echo $nombreClase; ?>">
-                <input type="hidden" name="clase" value="<?php echo $idClase ?>">
+                <label for="nombre" class="block mb-2 text-sm font-medium text-psipeGray">Nombre del Archivo</label>
+                <input type="text" name="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="">
+                <input type="hidden" name="idClase" value="<?php echo $idClase ?>">
             </div>
             <div class="mb-6">
-                <label for="presentacion" class="block mb-2 text-sm font-medium text-psipeGray">Presentacion</label>
-                <input type="text" name="presentacion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="" value="<?php echo $presentacion; ?>">
-            </div>
-            <div class="mb-6">
-                <label for="video" class="block mb-2 text-sm font-medium text-psipeGray">Video</label>
-                <input type="text" name="video" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="" value="<?php echo $video; ?>">
+                <label for="archivo" class="block mb-2 text-sm font-medium text-psipeGray">Archivo</label>
+                <input type="file" name="archivo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="" value="<?php echo $presentacion; ?>">
             </div>
             <div class="flex justify-center">
-                <button type="submit" name="submit" class="text-white bg-psipeBlue hover:bg-psipeGreen font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Actualizar</button>
+                <button type="submit" name="submit" class="text-white bg-psipeBlue hover:bg-psipeGreen font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Agregar</button>
+            </div>
+        </form>
+        <!-- Despliegue de archivos actuales de tal clase para poder eliminarlos -->
+        <form action="" method="post">
+            <p class="text-lg text-center font-bold m-5">Modulos</p>
+            <table class="rounded-t-lg m-5 mx-auto bg-gray-200 text-gray-800 w-full">
+                <tr class="text-left border-b-2 border-gray-300">
+                    <th class="px-4 py-5">ID</th>
+                    <th class="px-4 py-5">Nombre</th>
+                    <th class="px-4 py-5 text-center">Eliminar</th>
+                </tr>
+                <?php
+                    if ($idClase != '') {
+                        $query = "SELECT idArchivo, nombre FROM bibliotecaClase WHERE idClase = $idClase";
+                        $result = mysqli_query($conn, $query);
+                        while ($archivo = mysqli_fetch_array($result)){
+                            echo '<tr class="bg-gray-100 border-b border-gray-200">';
+                                echo '<td class="px-4 py-5">'.$archivo['idArchivo'].'</td>';
+                                echo '<td class="px-4 py-5">'.$archivo['nombre'].'</td>';
+                                echo '<td class="px-4 py-5 text-center"><input type="checkbox" name="idArchivo[]" value="'.$archivo['idArchivo'].'"></td>';
+                            echo '</tr>';
+                        }
+                    }
+                ?>
+            </table>
+            <div class="flex justify-center">
+                <button type="submit" name="eliminar" class="text-white bg-psipeBlue hover:bg-psipeGreen font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Eliminar</button>
             </div>
         </form>
     </div>

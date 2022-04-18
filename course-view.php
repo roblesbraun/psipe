@@ -97,6 +97,11 @@
     
     <!-- Main Container -->
     <div class="container mx-auto p-10">
+        <a href="./formacion.php">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z" clip-rule="evenodd" />
+            </svg>
+        </a>
         <h1 class="text-3xl text-center"><?php echo $curso['nombre'] ?></h1>
         <!-- Container tablas, biblioteca, sesiones en vivo -->
         <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 md:grid-cols-2 justify-center mt-7">
@@ -135,11 +140,18 @@
                 </tr>
             </table>
             <div class="grid grid-rows-2 space-y-4">
-                <div class="bg-psipeGreen rounded-lg p-5">
+                <div class="bg-psipeGreen rounded-lg p-5 flex flex-col">
                     <h1 class="text-2xl">Biblioteca</h1>
-                    <p>En esta sección encontraras material de apoyo para tu estudio</p>
-                    <p>Material Principal</p>
-                    <p>Material Complementario</p>
+                    <p class="mb-3">En esta sección encontraras material de apoyo para tu estudio</p>
+                    <ul class="list-disc list-inside">
+                        <?php
+                            $query = "SELECT * FROM bibliotecaCurso WHERE idCurso = $idCurso";
+                            $result = mysqli_query($conn, $query);
+                            while ($bibliotecas = mysqli_fetch_array($result)){
+                                echo '<li class="mb-3"><a href="./course-library-view.php?idBiblioteca='.$bibliotecas['idBiblioteca'].'&idCurso='.$idCurso.'" class="text-lg underline decoration-transparent decoration-2 hover:decoration-psipeBlue">'.$bibliotecas['nombre'].'</a></li>';
+                            }
+                        ?>
+                    </ul>
                 </div>
                 <div class="">
                     <table class="rounded-t-lg w-full mx-auto bg-psipeGreen text-gray-800 text-center text-sm">

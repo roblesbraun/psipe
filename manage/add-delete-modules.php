@@ -15,7 +15,31 @@
     if(isset($_POST['curso'])){
         $idCurso = $_POST['curso'];
     }
-    //Para eliminar un curso
+    //Para eliminar un modulo
+    //Checamos que no tenga ni temas, ni archivos...
+    $canDelete = 0;
+    $errorMessage = '';
+    if(isset($_POST['eliminar'])){
+        $canDelete = 0;
+        $errorMessage = '';
+        foreach ($_POST['idClase'] as $idClase) {
+            $queryImgs = "SELECT * FROM carruselClase WHERE idClase = $idClase;";
+            $resultImgs = mysqli_query($conn, $queryImgs);
+            $queryBiblio = "SELECT * FROM bibliotecaClase WHERE idClase = $idClase;";
+            $resultBiblio = mysqli_query($conn, $queryBiblio);
+            if (mysqli_num_rows($resultImgs)>0 or mysqli_num_rows($resultBiblio)>0) {
+                $canDelete = 1;
+                $errorMessage = '<p class="text-red-500 text-center">No se puede eliminar, ya que una o mas clases, tienen archivos y/o imagenes sin eliminar.</p>';
+                break;
+            }
+        }
+        if ($canDelete == 0) {
+            foreach ($_POST['idClase'] as $idClase) {
+                $query = "DELETE FROM clases WHERE idClase = $idClase;";
+                $resultElim = mysqli_query($conn, $query);
+            }
+        }
+    }
     if(isset($_POST['eliminar'])){
         foreach ($_POST['idModulo'] as $idModulo) {
             $query = "DELETE FROM modulos WHERE idModulo = $idModulo;";

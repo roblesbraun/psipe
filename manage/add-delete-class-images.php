@@ -8,11 +8,9 @@
     $result = mysqli_query($conn, $query);
     $modulo = mysqli_fetch_array($result);
     $idModulo = $modulo['idModulo'];
-    $nombreClase = '';
-    $presentacion = '';
-    $video = '';
     $query = "SELECT idClase, nombre, presentacion, video, idModulo FROM clases WHERE idModulo = $idModulo ORDER BY idClase limit 1;";
     $result = mysqli_query($conn, $query);
+    $idClase = '';
     // if (mysqli_num_rows($result) > 0) {
     //     $clase = mysqli_fetch_array($result);
     //     $idClase = $clase['idClase'];
@@ -25,22 +23,27 @@
     //     $presentacion = '';
     //     $video = '';
     // }
-    //Para editar clase...
+    //Para agregar imagen de clase...
     if(isset($_POST['submit'])){
-        $idClase = $_POST['clase'];
-        $nombreClase = $_POST['nombreClase'];
-        $presentacion = $_POST['presentacion'];
-        $video = $_POST['video'];
-        $findMe = 'https://www.youtube.com/embed/';
-        $editedVideo = strpos($video, $findMe);
-        if ($editedVideo === false) {
-            $videoYT = 'https://www.youtube.com/embed/'.substr($video, 32, strlen($video)-1);
-        }
-        else {
-            $videoYT = $video = $_POST['video'];
-        }
-        $query = "UPDATE clases SET nombre = '$nombreClase', presentacion = '$presentacion', video = '$videoYT' WHERE idClase = $idClase;";
+        $idClase = $_POST['idClase'];
+        $imagen = $_FILES['imagen']['name'];
+        $tmpImagen = $_FILES['imagen']['tmp_name'];
+        $query = "INSERT INTO carruselClase (rutaImagen, idClase) VALUES (1, $idClase);";
         $result = mysqli_query($conn, $query);
+        $query = "SELECT idImagen FROM carruselClase ORDER BY idImagen desc limit 1";
+        $result = mysqli_query($conn, $query);
+        $idImagen = '';
+        if (mysqli_num_rows($result)>0) {
+            while ($row = mysqli_fetch_array($result)){
+                $idImagen = $row[0];
+            }
+        }
+        $query = "UPDATE carruselClase SET rutaImagen = '".$idImagen."-".$imagen."' WHERE idImagen = ".$idImagen.";";
+        if (!mysqli_query($conn, $query)) {
+            die('Error: ' . mysqli_error($conn));
+        }
+        move_uploaded_file($tmpImagen, '../img/carruselClase/'.$idImagen.'-'.$imagen);
+        header("Location: add-delete-class-images.php", true, 303);
     }
     //Para cambiar de curso...
     if(isset($_POST['curso'])){
@@ -85,6 +88,18 @@
         $curso = mysqli_fetch_array($result);
         $idCurso = $curso['idCurso'];
     }
+    //Para eliminar un archivo de una clase
+    if(isset($_POST['eliminar'])){
+        foreach ($_POST['idImagen'] as $idImagen) {
+            $query= "SELECT rutaImagen FROM carruselClase WHERE idImagen = $idImagen;";
+            $result = mysqli_query($conn, $query);
+            $rutaImagen = mysqli_fetch_array($result);
+            unlink('../img/carruselClase/'.$rutaImagen['rutaImagen'].'');
+            $query = "DELETE FROM carruselClase WHERE idImagen = $idImagen;";
+            $resultElim = mysqli_query($conn, $query);
+        }
+        header("Location: add-delete-class-files.php", true, 303);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,7 +107,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar/Eliminar Temas de Módulos</title>
+    <title>Agregar/Eliminar Imagenes de Clases</title>
     <link rel="stylesheet" href="../tailwind.css">
 </head>
 <body>
@@ -143,7 +158,7 @@
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z" clip-rule="evenodd" />
             </svg>
         </a>
-        <h1 class="text-2xl text-center mb-5">Editar Clases</h1>
+        <h1 class="text-2xl text-center mb-5">Agregar/Eliminar imagenes de Clases</h1>
         <!-- FORM -->
         <form action="" method="post" class="mb-6">
             <div class="mb-6">
@@ -205,22 +220,41 @@
                 </select>
             </div>
         </form>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <div class="mb-6">
-                <label for="nombreClase" class="block mb-2 text-sm font-medium text-psipeGray">Nombre de la Clase</label>
-                <input type="text" name="nombreClase" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="" value="<?php echo $nombreClase; ?>">
-                <input type="hidden" name="clase" value="<?php echo $idClase ?>">
-            </div>
-            <div class="mb-6">
-                <label for="presentacion" class="block mb-2 text-sm font-medium text-psipeGray">Presentacion</label>
-                <input type="text" name="presentacion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="" value="<?php echo $presentacion; ?>">
-            </div>
-            <div class="mb-6">
-                <label for="video" class="block mb-2 text-sm font-medium text-psipeGray">Video</label>
-                <input type="text" name="video" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="" value="<?php echo $video; ?>">
+                <label for="imagen" class="block mb-2 text-sm font-medium text-psipeGray">Imagen</label>
+                <input type="file" name="imagen" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="">
+                <input type="hidden" name="idClase" value="<?php echo $idClase ?>">
             </div>
             <div class="flex justify-center">
-                <button type="submit" name="submit" class="text-white bg-psipeBlue hover:bg-psipeGreen font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Actualizar</button>
+                <button type="submit" name="submit" class="text-white bg-psipeBlue hover:bg-psipeGreen font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Agregar</button>
+            </div>
+        </form>
+        <!-- Despliegue de archivos actuales de tal clase para poder eliminarlos -->
+        <form action="" method="post">
+            <p class="text-lg text-center font-bold m-5">Modulos</p>
+            <table class="rounded-t-lg m-5 mx-auto bg-gray-200 text-gray-800 w-full">
+                <tr class="text-left border-b-2 border-gray-300">
+                    <th class="px-4 py-5">ID</th>
+                    <th class="px-4 py-5">Imagen</th>
+                    <th class="px-4 py-5 text-center">Eliminar</th>
+                </tr>
+                <?php
+                    if ($idClase != '') {
+                        $query = "SELECT idImagen, rutaImagen FROM carruselClase WHERE idClase = $idClase";
+                        $result = mysqli_query($conn, $query);
+                        while ($imagen = mysqli_fetch_array($result)){
+                            echo '<tr class="bg-gray-100 border-b border-gray-200">';
+                                echo '<td class="px-4 py-5">'.$imagen['idImagen'].'</td>';
+                                echo '<td class="px-4 py-5"><img src="../img/carruselClase/'.$imagen['rutaImagen'].'" class="rounded-lg h-20 w-20"></td>';
+                                echo '<td class="px-4 py-5 text-center"><input type="checkbox" name="idImagen[]" value="'.$imagen['idImagen'].'"></td>';
+                            echo '</tr>';
+                        }
+                    }
+                ?>
+            </table>
+            <div class="flex justify-center">
+                <button type="submit" name="eliminar" class="text-white bg-psipeBlue hover:bg-psipeGreen font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Eliminar</button>
             </div>
         </form>
     </div>

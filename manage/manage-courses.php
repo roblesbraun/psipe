@@ -176,14 +176,24 @@
                     <p class="text-center text-xs lg:text-base md:text-sm mt-2">Editar Clases</p>
                 </div>
             </a>
-            <a href="./add-delete-library-files.php">
-                <div class="h-44 w-32 rounded-xl bg-gray-300 flex flex-col space-y-8 justify-start items-center shadow duration-300 hover:bg-gray-100 hover:shadow-xl hover:-translate-y-1 p-3">
+            <a href="./add-delete-class-files.php">
+                <div class="h-44 w-32 rounded-xl bg-gray-300 flex flex-col space-y-8 justify-center items-center shadow duration-300 hover:bg-gray-100 hover:shadow-xl hover:-translate-y-1 p-3">
                     <div class="bg-psipeGreen rounded-full h-14 w-14 flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                         </svg>
                     </div>
-                    <p class="text-center text-xs lg:text-base md:text-sm mt-2">Agregar archivos a Biblioteca</p>
+                    <p class="text-center text-xsm lg:text-sm md:text-sm mt-2">Agregar/Eliminar archivos de Clase</p>
+                </div>
+            </a>
+            <a href="./add-delete-class-images.php">
+                <div class="h-44 w-32 rounded-xl bg-gray-300 flex flex-col space-y-8 justify-center items-center shadow duration-300 hover:bg-gray-100 hover:shadow-xl hover:-translate-y-1 p-3">
+                    <div class="bg-psipeGreen rounded-full h-14 w-14 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <p class="text-center text-xsm lg:text-sm md:text-sm mt-2">Agregar/Eliminar imagenes de Carrusel</p>
                 </div>
             </a>
         </div>

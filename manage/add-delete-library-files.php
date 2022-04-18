@@ -32,11 +32,11 @@
                 $idArchivo = $row[0];
             }
         }
-        $query = "UPDATE bibliotecaCursoArchivos SET rutaArchivo = '".$idArchivo."-".$nombreArchivo."' WHERE idArchivo = ".$idArchivo.";";
+        $query = "UPDATE bibliotecaCursoArchivos SET rutaArchivo = '".$idArchivo."-".$archivo."' WHERE idArchivo = ".$idArchivo.";";
         if (!mysqli_query($conn, $query)) {
             die('Error: ' . mysqli_error($conn));
         }
-        move_uploaded_file($tmpArchivo, '../img/bibliotecaCursos/'.$idArchivo.'-'.$nombreArchivo);
+        move_uploaded_file($tmpArchivo, '../img/bibliotecaCursos/'.$idArchivo.'-'.$archivo);
         header("Location: add-delete-library-files.php", true, 303);
     }
     //Para cambiar de curso...
@@ -176,7 +176,7 @@
                 <input type="hidden" name="biblioteca" value="<?php echo $idBiblioteca ?>">
             </div>
             <div class="mb-6">
-                <label for="archivo" class="block mb-2 text-sm font-medium text-psipeGray">Archivo</label>
+                <label for="archivo" class="block mb-2 text-sm font-medium text-psipeGray">Archivo (recuerda no subir archivos que tengan en el nombre, espacios o caracteres especiales)</label>
                 <input type="file" name="archivo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="">
             </div>
             <div class="flex justify-center">

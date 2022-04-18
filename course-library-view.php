@@ -1,25 +1,21 @@
 <?php
     include('./manage/connection.php');
-    $carpetaArchivos = './img/bibliotecaClase/';
-    $idClase = $_GET['idClase'];
-    $query = "SELECT * FROM clases WHERE idClase = $idClase";
+    $carpetaArchivos = './img/bibliotecaCursos/';
+    $idBiblioteca = $_GET['idBiblioteca'];
+    $idCurso = $_GET['idCurso'];
+    //Obtenemos el nombre del curso
+    $query = "SELECT * FROM cursos WHERE idCurso = $idCurso";
     $result = mysqli_query($conn, $query);
-    $clase = mysqli_fetch_array($result);
-    $idModulo = $clase['idModulo'];
-    //Nombre del Modulo
-    $queryModulo = "SELECT nombre, idCurso FROM modulos WHERE idModulo = ".$clase['idModulo'].";";
-    $resultModulo = mysqli_query($conn, $queryModulo);
-    $modulo = mysqli_fetch_array($resultModulo);
-    //Nombre de la clase
-    $queryCurso = "SELECT nombre FROM cursos WHERE idCurso = ".$modulo['idCurso'].";";
-    $resultCurso = mysqli_query($conn, $queryCurso);
-    $curso = mysqli_fetch_array($resultCurso);
-    //Archivos de bilioteca de clase
-    $query = "SELECT nombre, rutaArchivo FROM bibliotecaClase WHERE idClase = $idClase";
+    $curso = mysqli_fetch_array($result);
+    $nombreCurso = $curso['nombre'];
+    //Obtenemos nombre de biblioteca de curso
+    $query = "SELECT * FROM bibliotecaCurso WHERE idBiblioteca = $idBiblioteca";
     $result = mysqli_query($conn, $query);
-    //Imagenes de clase, si es que las hay
-    $query = "SELECT rutaImagen FROM carruselClase WHERE idClase = $idClase";
-    $resultImagenes = mysqli_query($conn, $query);
+    $biblioteca = mysqli_fetch_array($result);
+    $nombreBiblioteca = $biblioteca['nombre'];
+    //Archivos de la bilioteca
+    $query = "SELECT * FROM bibliotecaCursoArchivos WHERE idBiblioteca = $idBiblioteca";
+    $result = mysqli_query($conn, $query);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,12 +23,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $clase['nombre'] ?></title>
+    <title>Detalles del Curso</title>
     <link rel="stylesheet" href="./tailwind.css">
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.2/dist/flowbite.min.css" />
 </head>
 <body>
-    <!-- Navbar -->
+   <!-- Navbar -->
     <!-- navbar goes here -->
     <nav class="bg-psipeGreen">
         <div class="px-3 mx-auto">
@@ -111,71 +106,24 @@
         </div>
     </nav>
     <!-- Fin de navbar -->
-
-    <!-- Main container -->
+    
+    <!-- Main Container -->
     <div class="container mx-auto p-10">
-        <a href="./module-view.php?idModulo=<?php echo $idModulo ?>">
+        <a href="./course-view.php?idCurso=<?php echo $idCurso ?>">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z" clip-rule="evenodd" />
             </svg>
         </a>
-        <h1 class="text-3xl text-psipeDarkGray mb-7 text-center"><?php echo $curso['nombre'] ?></h1>
-        <h1 class="text-2xl text-psipeBlue mb-2">Modulo: <?php echo $modulo['nombre'] ?></h1>
-        <h1 class="text-xl mb-7"><?php echo $clase['nombre'] ?></h1>
-        <!-- Container video y biblioteca -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-7 mb-5">
-            <div class="space-y-5">
-                <div>
-                    <h1 class="text-xl text-psipeBlue">Vídeo de la Sesión</h1>
-                    <iframe class="w-full h-52 md:h-80 lg:h-80 rounded-lg" src="<?php echo $clase['video'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <div>
-                    <h1 class="text-xl text-psipeBlue">Presentación</h1>
-                    <iframe src="<?php echo $clase['presentacion'] ?>" frameborder="0" class="w-full h-52 md:h-80 lg:h-80 rounded-lg" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-                </div>
-            </div>    
-            <div class="bg-psipeGreen rounded-lg p-4">
-                <h1 class="text-2xl mb-3">Biblioteca de Clase</h1>
-                <?php
-                    while ($archivos = mysqli_fetch_array($result)){
-                        echo '<a href="./download.php?file='.urlencode($archivos['rutaArchivo']).'&carpetaArchivos='.$carpetaArchivos.'">
-                                <p class="flex items-center space-x-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
-                                    </svg>
-                                    <span>'.$archivos['nombre'].'</span>
-                                </p>
-                            </a>';
-                    }
-                ?>
-                <!-- <a href="./download.php?file='.urlencode($archivos['rutaArchivo']).'$carpetaArchivos='./img/bibliotecaClase'">
-                    <p class="flex items-center space-x-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
-                        </svg>
-                        <span>Recurso 1</span>
-                    </p>
-                </a>
-                <p class="flex items-center space-x-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
-                    </svg>
-                    <span>Recurso 2</span>
-                </p> -->
-            </div>
-        </div>
-        <?php
-            if (mysqli_num_rows($resultImagenes)>0) {
-                echo '<h1 class="text-xl text-center text-psipeBlue">Imagenes de Clase</h1>';
-                echo '<div class="flex flex-nowrap overflow-scroll overflow-y-hidden space-x-7 snap-mandatory snap-x">';
-                while ($imagenes = mysqli_fetch_array($resultImagenes)){
-                    echo '<img src="./img/carruselClase/'.$imagenes['rutaImagen'].'" class="w-screen snap-center">';
+        <h1 class="text-3xl text-center mb-7"><?php echo $nombreCurso ?></h1>
+        <h1 class="text-xl mb-7"><?php echo $nombreBiblioteca ?></h1>
+        <ul class="list-disc list-inside">
+            <?php
+                while ($archivos = mysqli_fetch_array($result)){
+                    echo '<li class="mb-3"><a href="./download.php?file='.urlencode($archivos['rutaArchivo']).'&carpetaArchivos='.$carpetaArchivos.'" class="text-lg underline decoration-transparent decoration-2 hover:decoration-psipeBlue">'.$archivos['nombre'].'</a></li>';
                 }
-                echo '</div>';
-            }
-        ?>
+            ?>
+        </ul>
     </div>
-    <script src="https://unpkg.com/flowbite@1.4.2/dist/flowbite.js"></script>
-    <script src="./main.js" ></script>
+    <script src="./main.js"></script>
 </body>
 </html>
