@@ -10,11 +10,13 @@
     $idModulo = $modulo['idModulo'];
     $nombreModulo = $modulo['nombre'];
     $rangoClases= $modulo['rangoClases'];
-    //Para actualizar el modulo ...
+    //Para agregar la clase ...
     if(isset($_POST['submit'])){
         $idModulo = $_POST['modulo'];
         $nombreClase = $_POST['nombreClase'];
         $presentacion = $_POST['presentacion'];
+        $instrucciones = $_POST['instrucciones'];
+        $instruccionesConEstilo = nl2br($instrucciones, false);
         $video = $_POST['video'];
         $videoYT = 'https://www.youtube.com/embed/'.substr($video, 32, strlen($video)-1);
         // $findme = 'https://www.youtube.com/watch?v='; 
@@ -29,7 +31,7 @@
         // echo $nombreClase;
         // echo $presentacion;
         // echo $video;
-        $query = "INSERT INTO clases (nombre, presentacion, video, idModulo) VALUES ('$nombreClase', '$presentacion', '$videoYT', $idModulo);";
+        $query = "INSERT INTO clases (nombre, instrucciones, presentacion, video, idModulo) VALUES ('$nombreClase', '$instruccionesConEstilo', '$presentacion', '$videoYT', $idModulo);";
         $result = mysqli_query($conn, $query);
     }
     //Para cambiar de curso...
@@ -185,6 +187,10 @@
                 <label for="nombreClase" class="block mb-2 text-sm font-medium text-psipeGray">Nombre de la Clase</label>
                 <input type="text" name="nombreClase" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Clase 1" required="">
                 <input type="hidden" name="modulo" value="<?php echo $idModulo ?>">
+            </div>
+            <div class="mb-6">
+                <label for="instrucciones" class="block mb-2 text-sm font-medium text-psipeGray">Instrucciones de clase</label>
+                <textarea name="instrucciones" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" cols="30" rows="10" style="white-space: pre-wrap;"></textarea>
             </div>
             <div class="mb-6">
                 <label for="presentacion" class="block mb-2 text-sm font-medium text-psipeGray">Link de la presentación</label>

@@ -232,7 +232,7 @@
         </form>
         <!-- Despliegue de archivos actuales de tal clase para poder eliminarlos -->
         <form action="" method="post">
-            <p class="text-lg text-center font-bold m-5">Modulos</p>
+            <p class="text-lg text-center font-bold m-5">Imagenes</p>
             <table class="rounded-t-lg m-5 mx-auto bg-gray-200 text-gray-800 w-full">
                 <tr class="text-left border-b-2 border-gray-300">
                     <th class="px-4 py-5">ID</th>

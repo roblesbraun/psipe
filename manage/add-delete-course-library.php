@@ -13,11 +13,27 @@
     if(isset($_POST['curso'])){
         $idCurso = $_POST['curso'];
     }
-    //Para eliminar un curso
+    //Para eliminar una biblioteca de curso
+    //Checamos que no tenga archivos...
+    $canDelete = 0;
+    $errorMessage = '';
     if(isset($_POST['eliminar'])){
+        $canDelete = 0;
+        $errorMessage = '';
         foreach ($_POST['idBiblioteca'] as $idBiblioteca) {
-            $query = "DELETE FROM bibliotecaCurso WHERE idBiblioteca = $idBiblioteca;";
-            $resultElim = mysqli_query($conn, $query);
+            $queryArchivos = "SELECT * FROM bibliotecaCursoArchivos WHERE idBiblioteca = $idBiblioteca;";
+            $resultArchivos = mysqli_query($conn, $queryArchivos);
+            if (mysqli_num_rows($resultArchivos)>0) {
+                $canDelete = 1;
+                $errorMessage = '<p class="text-red-500 text-center">No se puede eliminar, ya que una o mas bibliotecas, tienen archivos sin eliminar.</p>';
+                break;
+            }
+        }
+        if ($canDelete == 0) {
+            foreach ($_POST['idBiblioteca'] as $idBiblioteca) {
+                $query = "DELETE FROM bibliotecaCurso WHERE idBiblioteca = $idBiblioteca;";
+                $resultElim = mysqli_query($conn, $query);
+            }
         }
     }
 ?>
@@ -111,7 +127,8 @@
         </form>
         <!-- Despliegue de cursos actuales para poder eliminarlos -->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-            <p class="text-lg text-center font-bold m-5">Cursos</p>
+            <p class="text-lg text-center font-bold m-5">Bibliotecas</p>
+            <?php echo $errorMessage;?>
             <table class="rounded-t-lg m-5 mx-auto bg-gray-200 text-gray-800 w-full">
                 <tr class="text-left border-b-2 border-gray-300">
                     <th class="px-4 py-5">ID</th>

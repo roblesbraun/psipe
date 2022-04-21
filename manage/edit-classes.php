@@ -11,6 +11,7 @@
     $nombreClase = '';
     $presentacion = '';
     $video = '';
+    $instrucciones = '';
     $query = "SELECT idClase, nombre, presentacion, video, idModulo FROM clases WHERE idModulo = $idModulo ORDER BY idClase limit 1;";
     $result = mysqli_query($conn, $query);
     // if (mysqli_num_rows($result) > 0) {
@@ -30,6 +31,8 @@
         $idClase = $_POST['clase'];
         $nombreClase = $_POST['nombreClase'];
         $presentacion = $_POST['presentacion'];
+        $instrucciones = $_POST['instrucciones'];
+        $instruccionesConEstilo = nl2br($instrucciones, false);
         $video = $_POST['video'];
         $findMe = 'https://www.youtube.com/embed/';
         $editedVideo = strpos($video, $findMe);
@@ -39,7 +42,7 @@
         else {
             $videoYT = $video = $_POST['video'];
         }
-        $query = "UPDATE clases SET nombre = '$nombreClase', presentacion = '$presentacion', video = '$videoYT' WHERE idClase = $idClase;";
+        $query = "UPDATE clases SET nombre = '$nombreClase', instrucciones = '$instruccionesConEstilo', presentacion = '$presentacion', video = '$videoYT' WHERE idClase = $idClase;";
         $result = mysqli_query($conn, $query);
     }
     //Para cambiar de curso...
@@ -72,7 +75,7 @@
     //Para elegir idClase
     if(isset($_POST['clase'])){
         $idClase = $_POST['clase'];
-        $query = "SELECT idClase, nombre, presentacion, video, idModulo FROM clases WHERE idClase = $idClase;";
+        $query = "SELECT *FROM clases WHERE idClase = $idClase;";
         $result = mysqli_query($conn, $query);
         $clase = mysqli_fetch_array($result);
         $idClase = $clase['idClase'];
@@ -80,6 +83,8 @@
         $presentacion = $clase['presentacion'];
         $video = $clase['video'];
         $idModulo = $clase['idModulo'];
+        $instruccionesConEstilo = $clase['instrucciones'];
+        $instrucciones = str_replace("<br>", "", $instruccionesConEstilo);
         $query = "SELECT idCurso FROM modulos WHERE idModulo = $idModulo;";
         $result = mysqli_query($conn, $query);
         $curso = mysqli_fetch_array($result);
@@ -210,6 +215,10 @@
                 <label for="nombreClase" class="block mb-2 text-sm font-medium text-psipeGray">Nombre de la Clase</label>
                 <input type="text" name="nombreClase" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="" value="<?php echo $nombreClase; ?>">
                 <input type="hidden" name="clase" value="<?php echo $idClase ?>">
+            </div>
+            <div class="mb-6">
+                <label for="instrucciones" class="block mb-2 text-sm font-medium text-psipeGray">Instrucciones de clase (apareceran caracteres raros, pero todo esta bien, si quieres editar las instrucciones, vuelve a escribirlas)</label>
+                <textarea name="instrucciones" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" cols="30" rows="10" style="white-space: pre-wrap;"><?php echo $instrucciones; ?></textarea>
             </div>
             <div class="mb-6">
                 <label for="presentacion" class="block mb-2 text-sm font-medium text-psipeGray">Presentacion</label>

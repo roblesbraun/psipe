@@ -8,15 +8,12 @@
         $horario = $_POST['horario'];
         $horasPresenciales = $_POST['horasPresenciales'];
         $horasAsincronas = $_POST['horasAsincronas'];
-        $numeroClases = $_POST['numeroClases'];
-        $fechaInicio = $_POST['fechaInicio'];
-        $fechaTermino = $_POST['fechaTermino'];
         $linkClase = $_POST['linkClase'];
         $nombreImagen = $_FILES['imagen']['name'];
         $tmpImagen = $_FILES['imagen']['tmp_name'];
         // echo '<p>Nombre del curso es:'.$nombreCurso.'</p>';
-        if ($nombreCurso != '' and $duracion != '' and $nombreDocente != '' and $dia != '' and $horario != '' and $horasPresenciales != '' and $horasAsincronas != '' and $numeroClases != '' and $fechaInicio != '' and $fechaTermino != '' and $linkClase != '') {
-            $query = "INSERT INTO cursos (nombre, docente, duracion, dia, horario, horasPresenciales, horasAsincronas, numeroClases, fechaInicio, fechaTermino, linkClase, rutaImagen) VALUES ('$nombreCurso', '$nombreDocente', $duracion, '$dia', '$horario', $horasPresenciales, $horasAsincronas, $numeroClases, '$fechaInicio', '$fechaTermino', '$linkClase', 1);";
+        if ($nombreCurso != '' and $duracion != '' and $nombreDocente != '' and $dia != '' and $horario != '' and $horasPresenciales != '' and $horasAsincronas != '' and $linkClase != '') {
+            $query = "INSERT INTO cursos (nombre, docente, duracion, dia, horario, horasPresenciales, horasAsincronas, linkClase, rutaImagen) VALUES ('$nombreCurso', '$nombreDocente', $duracion, '$dia', '$horario', $horasPresenciales, $horasAsincronas, '$linkClase', 1);";
             if (!mysqli_query($conn, $query)) {
                 die('Error: ' . mysqli_error($conn));
             }
@@ -38,17 +35,34 @@
         header("Location: add-delete-course.php", true, 303);
     }
     //Para eliminar un curso
+    //Checamos que no tenga ni modulos, ni bibliotecas...
+    $canDelete = 0;
+    $errorMessage = '';
     if(isset($_POST['eliminar'])){
-        echo 'ENTre';
+        $canDelete = 0;
+        $errorMessage = '';
         foreach ($_POST['idCurso'] as $idCurso) {
-            $query= "SELECT rutaImagen FROM cursos WHERE idCurso = $idCurso;";
-            $result = mysqli_query($conn, $query);
-            $rutaImagen = mysqli_fetch_array($result);
-            unlink('../img/cursos/'.$rutaImagen['rutaImagen'].'');
-            $query = "DELETE FROM cursos WHERE idCurso = $idCurso;";
-            $resultElim = mysqli_query($conn, $query);
+            $queryModulos = "SELECT * FROM modulos WHERE idCurso = $idCurso;";
+            $resultModulos = mysqli_query($conn, $queryModulos);
+            $queryBiblio = "SELECT * FROM bibliotecaCurso WHERE idCurso = $idCurso;";
+            $resultBiblio = mysqli_query($conn, $queryBiblio);
+            if (mysqli_num_rows($resultModulos)>0 or mysqli_num_rows($resultBiblio)>0) {
+                $canDelete = 1;
+                $errorMessage = '<p class="text-red-500 text-center">No se puede eliminar, ya que uno o mas cursos, tienen modulos y/o bibliotecas sin eliminar.</p>';
+                break;
+            }
         }
-        header("Location: add-delete-course.php", true, 303);
+        if ($canDelete == 0) {
+            foreach ($_POST['idCurso'] as $idCurso) {
+                $query= "SELECT rutaImagen FROM cursos WHERE idCurso = $idCurso;";
+                $result = mysqli_query($conn, $query);
+                $rutaImagen = mysqli_fetch_array($result);
+                unlink('../img/cursos/'.$rutaImagen['rutaImagen'].'');
+                $query = "DELETE FROM cursos WHERE idCurso = $idCurso;";
+                $resultElim = mysqli_query($conn, $query);
+            }
+            header("Location: add-delete-course.php", true, 303);
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -148,18 +162,6 @@
                 <input type="number" name="horasAsincronas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="40" required="">
             </div>
             <div class="mb-6">
-                <label for="numeroClases" class="block mb-2 text-sm font-medium text-psipeGray">Número de clases</label>
-                <input type="number" name="numeroClases" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="20" required="">
-            </div>
-            <div class="mb-6">
-                <label for="fechaInicio" class="block mb-2 text-sm font-medium text-psipeGray">Fecha de Inicio</label>
-                <input type="date" name="fechaInicio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="">
-            </div>
-            <div class="mb-6">
-                <label for="fechaTermino" class="block mb-2 text-sm font-medium text-psipeGray">Fecha de Término</label>
-                <input type="date" name="fechaTermino" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required="">
-            </div>
-            <div class="mb-6">
                 <label for="linkClase" class="block mb-2 text-sm font-medium text-psipeGray">Enlace de Sesiones</label>
                 <input type="url" name="linkClase" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Enlace" required="">
             </div>
@@ -174,6 +176,7 @@
         <!-- Despliegue de cursos actuales para poder eliminarlos -->
         <form action="" method="post">
             <p class="text-lg text-center font-bold m-5">Cursos</p>
+            <?php echo $errorMessage;?>
             <table class="rounded-t-lg m-5 mx-auto bg-gray-200 text-gray-800 w-full">
                 <tr class="text-left border-b-2 border-gray-300">
                     <th class="px-4 py-5">#</th>

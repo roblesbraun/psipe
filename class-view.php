@@ -10,7 +10,7 @@
     $queryModulo = "SELECT nombre, idCurso FROM modulos WHERE idModulo = ".$clase['idModulo'].";";
     $resultModulo = mysqli_query($conn, $queryModulo);
     $modulo = mysqli_fetch_array($resultModulo);
-    //Nombre de la clase
+    //Nombre del curso
     $queryCurso = "SELECT nombre FROM cursos WHERE idCurso = ".$modulo['idCurso'].";";
     $resultCurso = mysqli_query($conn, $queryCurso);
     $curso = mysqli_fetch_array($resultCurso);
@@ -122,6 +122,8 @@
         <h1 class="text-3xl text-psipeDarkGray mb-7 text-center"><?php echo $curso['nombre'] ?></h1>
         <h1 class="text-2xl text-psipeBlue mb-2">Modulo: <?php echo $modulo['nombre'] ?></h1>
         <h1 class="text-xl mb-7"><?php echo $clase['nombre'] ?></h1>
+        <h1 class="text-lg">Instrucciones de Clase</h1>
+        <p><?php echo $clase['instrucciones'] ?></p>
         <!-- Container video y biblioteca -->
         <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-7 mb-5">
             <div class="space-y-5">

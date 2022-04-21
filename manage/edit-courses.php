@@ -12,9 +12,6 @@
     $horario = $resultQuery['horario'];
     $horasPresenciales = $resultQuery['horasPresenciales'];
     $horasAsincronas = $resultQuery['horasAsincronas'];
-    $numeroClases = $resultQuery['numeroClases'];
-    $fechaInicio = $resultQuery['fechaInicio'];
-    $fechaTermino = $resultQuery['fechaTermino'];
     $linkClase = $resultQuery['linkClase'];
     $rutaImagen = $resultQuery['rutaImagen'];
     if(isset($_POST['curso'])){
@@ -31,13 +28,11 @@
         $horario = $resultQuery['horario'];
         $horasPresenciales = $resultQuery['horasPresenciales'];
         $horasAsincronas = $resultQuery['horasAsincronas'];
-        $numeroClases = $resultQuery['numeroClases'];
-        $fechaInicio = $resultQuery['fechaInicio'];
-        $fechaTermino = $resultQuery['fechaTermino'];
         $linkClase = $resultQuery['linkClase'];
         $rutaImagen = $resultQuery['rutaImagen'];
     }
     if(isset($_POST['submit'])){
+        $idCurso = $_POST['curso'];
         $nombreCurso = $_POST['nombreCurso'];
         $nombreDocente = $_POST['nombreDocente'];
         $duracion = $_POST['duracion'];
@@ -45,23 +40,24 @@
         $horario = $_POST['horario'];
         $horasPresenciales = $_POST['horasPresenciales'];
         $horasAsincronas = $_POST['horasAsincronas'];
-        $numeroClases = $_POST['numeroClases'];
-        $fechaInicio = $_POST['fechaInicio'];
-        $fechaTermino = $_POST['fechaTermino'];
         $linkClase = $_POST['linkClase'];
         $imagenVieja = $_POST['imagenVieja'];
         $nombreImagen = $_FILES['imagen']['name'];
         $tmpImagen = $_FILES['imagen']['tmp_name'];
-        if ($nombreImagen and $tmpImagen != ''){
+        $rutaImagen = "$idCurso-$nombreImagen";
+        echo $rutaImagen;
+        if ($nombreImagen != '' and $tmpImagen != ''){
+            echo 'Entre';
             unlink('../img/cursos/'.$imagenVieja.'');
-            $query = "UPDATE cursos SET nombre = '$nombreCurso', docente = '$nombreDocente', duracion = '$duracion', dia = '$dia', horario = '$horario', horasPresenciales = '$horasPresenciales', horasAsincronas = '$horasAsincronas', numeroClases = '$numeroClases', fechaInicio = '$fechaInicio', fechaTermino = '$fechaTermino', linkClase = '$linkClase', rutaImagen = '$rutaImagen' WHERE idCurso = $idCurso";
+            $query = "UPDATE cursos SET nombre = '$nombreCurso', docente = '$nombreDocente', duracion = '$duracion', dia = '$dia', horario = '$horario', horasPresenciales = '$horasPresenciales', horasAsincronas = '$horasAsincronas', linkClase = '$linkClase', rutaImagen = '$rutaImagen' WHERE idCurso = $idCurso";
             $result = mysqli_query($conn, $query);
             move_uploaded_file($tmpImagen, '../img/cursos/'.$rutaImagen.'');
         }
         else {
-            $query = "UPDATE cursos SET nombre = '$nombreCurso', docente = '$nombreDocente', duracion = '$duracion', dia = '$dia', horario = '$horario', horasPresenciales = '$horasPresenciales', horasAsincronas = '$horasAsincronas', numeroClases = '$numeroClases', fechaInicio = '$fechaInicio', fechaTermino = '$fechaTermino', linkClase = '$linkClase' WHERE idCurso = $idCurso";
+            $query = "UPDATE cursos SET nombre = '$nombreCurso', docente = '$nombreDocente', duracion = '$duracion', dia = '$dia', horario = '$horario', horasPresenciales = '$horasPresenciales', horasAsincronas = '$horasAsincronas', linkClase = '$linkClase' WHERE idCurso = $idCurso";
             $result = mysqli_query($conn, $query);
         }
+        header("Location: edit-courses.php", true, 303);
     }
 ?>
 <!DOCTYPE html>
@@ -124,10 +120,6 @@
         <h1 class="text-2xl text-center mb-5">Editar Curso</h1>
         <form action="" name="editar" method="post">
             <div class="flex flex-col md:flex-row md:space-x-7 lg:space-x-7">
-                <div class="mb-6 w-full md:w-1/6 lg:w-1/6">
-                    <label for="idCurso" class="block mb-2 text-sm font-medium text-psipeGray">ID del Curso</label>
-                    <input type="text" name="idCurso" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" value="<?php echo $idCurso ?>" required="" disabled>
-                </div>
                 <div class="mb-6 w-full">
                     <label for="curso" class="block mb-2 text-sm font-medium text-psipeGray" required="">Curso a Editar</label>
                     <select name="curso" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3" onchange="this.form.submit()">
@@ -137,7 +129,6 @@
                             while ($cursos= mysqli_fetch_array($result)){
                                 if ($cursos['idCurso'] == $idCurso) {
                                     echo '<option value='.$cursos['idCurso'].' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" selected>'.$cursos['nombre'].'</option>';
-                                    $idCursoSelect = 'deseleccionado';
                                 }
                                 else {
                                     echo '<option value='.$cursos['idCurso'].' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">'.$cursos['nombre'].'</option>';
@@ -149,10 +140,11 @@
             </div>
         </form>
         <!-- FORM -->
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" class="mb-10">
+        <form action="" method="post" enctype="multipart/form-data" class="mb-10">
             <div class="mb-6">
                 <label for="nombreCurso" class="block mb-2 text-sm font-medium text-psipeGray">Nombre del Diplomado</label>
                 <input type="text" name="nombreCurso" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Diplomado Terapia de Lenguaje Aplicada" value="<?php echo $nombreCurso ?>" required="">
+                <input type="hidden" name="curso" value="<?php echo $idCurso ?>">
             </div>
             <div class="mb-6">
                 <label for="duracion" class="block mb-2 text-sm font-medium text-psipeGray">Duracion (en horas)</label>
@@ -177,18 +169,6 @@
             <div class="mb-6">
                 <label for="horasAsincronas" class="block mb-2 text-sm font-medium text-psipeGray">Horas asíncronas</label>
                 <input type="number" name="horasAsincronas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="40" value="<?php echo $horasAsincronas;?>" required="">
-            </div>
-            <div class="mb-6">
-                <label for="numeroClases" class="block mb-2 text-sm font-medium text-psipeGray">Número de clases</label>
-                <input type="number" name="numeroClases" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="20" value="<?php echo $numeroClases;?>" required="">
-            </div>
-            <div class="mb-6">
-                <label for="fechaInicio" class="block mb-2 text-sm font-medium text-psipeGray">Fecha de Inicio</label>
-                <input type="date" name="fechaInicio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" value="<?php echo $fechaInicio;?>" required="">
-            </div>
-            <div class="mb-6">
-                <label for="fechaTermino" class="block mb-2 text-sm font-medium text-psipeGray">Fecha de Término</label>
-                <input type="date" name="fechaTermino" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" value="<?php echo $fechaTermino;?>" required="">
             </div>
             <div class="mb-6">
                 <label for="linkClase" class="block mb-2 text-sm font-medium text-psipeGray">Enlace de Sesiones</label>

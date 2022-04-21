@@ -8,8 +8,7 @@
         $idCurso = $_POST['curso'];
         $nombre = $_POST['nombreModulo'];
         $rangoClases = $_POST['rangoClases'];
-        $temario = $_POST['temario'];
-        $query = "INSERT INTO modulos (nombre, rangoClases, temario, idCurso) VALUES ('$nombre', '$rangoClases', '$temario', $idCurso)";
+        $query = "INSERT INTO modulos (nombre, rangoClases, idCurso) VALUES ('$nombre', '$rangoClases', $idCurso)";
         $result = mysqli_query($conn, $query);
     }
     if(isset($_POST['curso'])){
@@ -22,28 +21,22 @@
     if(isset($_POST['eliminar'])){
         $canDelete = 0;
         $errorMessage = '';
-        foreach ($_POST['idClase'] as $idClase) {
-            $queryImgs = "SELECT * FROM carruselClase WHERE idClase = $idClase;";
-            $resultImgs = mysqli_query($conn, $queryImgs);
-            $queryBiblio = "SELECT * FROM bibliotecaClase WHERE idClase = $idClase;";
-            $resultBiblio = mysqli_query($conn, $queryBiblio);
-            if (mysqli_num_rows($resultImgs)>0 or mysqli_num_rows($resultBiblio)>0) {
+        foreach ($_POST['idModulo'] as $idModulo) {
+            $queryClases = "SELECT * FROM clases WHERE idModulo = $idModulo;";
+            $resultClases = mysqli_query($conn, $queryClases);
+            $queryTemarios = "SELECT * FROM temarioModulos WHERE idModulo = $idModulo;";
+            $resultTemarios = mysqli_query($conn, $queryTemarios);
+            if (mysqli_num_rows($resultClases)>0 or mysqli_num_rows($resultTemarios)>0) {
                 $canDelete = 1;
-                $errorMessage = '<p class="text-red-500 text-center">No se puede eliminar, ya que una o mas clases, tienen archivos y/o imagenes sin eliminar.</p>';
+                $errorMessage = '<p class="text-red-500 text-center">No se puede eliminar, ya que uno o mas modulos, tienen temarios y/o clases sin eliminar.</p>';
                 break;
             }
         }
         if ($canDelete == 0) {
-            foreach ($_POST['idClase'] as $idClase) {
-                $query = "DELETE FROM clases WHERE idClase = $idClase;";
+            foreach ($_POST['idModulo'] as $idModulo) {
+                $query = "DELETE FROM modulos WHERE idModulo = $idModulo;";
                 $resultElim = mysqli_query($conn, $query);
             }
-        }
-    }
-    if(isset($_POST['eliminar'])){
-        foreach ($_POST['idModulo'] as $idModulo) {
-            $query = "DELETE FROM modulos WHERE idModulo = $idModulo;";
-            $resultElim = mysqli_query($conn, $query);
         }
     }
 ?>
@@ -135,10 +128,6 @@
                 <label for="rangoClases" class="block mb-2 text-sm font-medium text-psipeGray">Rango de Clases</label>
                 <input type="text" name="rangoClases" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Clases 1-3" required="">
             </div>
-            <div class="mb-6">
-                <label for="temario" class="block mb-2 text-sm font-medium text-psipeGray">Temario</label>
-                <textarea name="temario" id="" cols="30" rows="10" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"></textarea>
-            </div>
             <div class="flex justify-center">
                 <button type="submit" name="submit" class="text-white bg-psipeBlue hover:bg-psipeGreen font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Agregar</button>
             </div>
@@ -146,6 +135,7 @@
         <!-- Despliegue de cursos actuales para poder eliminarlos -->
         <form action="" method="post">
             <p class="text-lg text-center font-bold m-5">Modulos</p>
+            <?php echo $errorMessage;?>
             <table class="rounded-t-lg m-5 mx-auto bg-gray-200 text-gray-800 w-full">
                 <tr class="text-left border-b-2 border-gray-300">
                     <th class="px-4 py-5">ID</th>
