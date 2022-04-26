@@ -20,6 +20,9 @@
     //Imagenes de clase, si es que las hay
     $query = "SELECT rutaImagen FROM carruselClase WHERE idClase = $idClase";
     $resultImagenes = mysqli_query($conn, $query);
+    //Videos de clase, si es que las hay
+    $query = "SELECT nombre, link FROM videosClase WHERE idClase = $idClase";
+    $resultVideos = mysqli_query($conn, $query);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +32,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $clase['nombre'] ?></title>
     <link rel="stylesheet" href="./tailwind.css">
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.2/dist/flowbite.min.css" />
 </head>
 <body>
     <!-- Navbar -->
@@ -125,15 +127,15 @@
         <h1 class="text-lg">Instrucciones de Clase</h1>
         <p><?php echo $clase['instrucciones'] ?></p>
         <!-- Container video y biblioteca -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-7 mb-5">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 gap-7 mb-5">
             <div class="space-y-5">
                 <div>
                     <h1 class="text-xl text-psipeBlue">Vídeo de la Sesión</h1>
-                    <iframe class="w-full h-52 md:h-80 lg:h-80 rounded-lg" src="<?php echo $clase['video'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class="w-full h-64 md:h-64 lg:h-80 rounded-lg" src="<?php echo $clase['video'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div>
                     <h1 class="text-xl text-psipeBlue">Presentación</h1>
-                    <iframe src="<?php echo $clase['presentacion'] ?>" frameborder="0" class="w-full h-52 md:h-80 lg:h-80 rounded-lg" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                    <iframe src="<?php echo $clase['presentacion'] ?>" frameborder="0" class="w-full h-64 md:h-80 lg:h-80 rounded-lg" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
                 </div>
             </div>    
             <div class="bg-psipeGreen rounded-lg p-4">
@@ -176,8 +178,31 @@
                 echo '</div>';
             }
         ?>
+        <?php
+            if (mysqli_num_rows($resultVideos)>0) {
+                echo '<h1 class="text-xl text-center text-psipeBlue mt-10">Videos de Clase</h1>';
+                echo '<div class="grid grid-cols-1 lg:grid-cols-2 gap-5">';
+                while ($videos = mysqli_fetch_array($resultVideos)){
+                    echo '<div>';
+                        echo '<h1 class="text-lg text-center mt-10">'.$videos['nombre'].'</h1>';
+                        echo '<iframe class="w-full h-64 md:h-80 lg:h-80 rounded-lg" src="'.$videos['link'].'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                    echo '</div>';
+                }
+                echo '</div>';
+            }
+        ?>
+        <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div>
+                <h1>Video</h1>
+                <iframe src="https://www.youtube.com/embed/_e0C4XZq1XA" class="w-full h-80 rounded-lg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div>
+                <h1>Video</h1>
+                <iframe src="https://www.youtube.com/embed/_e0C4XZq1XA" class="w-full h-80 rounded-lg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div> -->
+        <!-- <iframe src="https://www.youtube.com/embed/_e0C4XZq1XA" class="w-1/2 md:w-full rounded-lg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
     </div>
-    <script src="https://unpkg.com/flowbite@1.4.2/dist/flowbite.js"></script>
     <script src="./main.js" ></script>
 </body>
 </html>
