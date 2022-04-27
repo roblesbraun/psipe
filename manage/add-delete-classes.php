@@ -56,7 +56,7 @@
         $idCurso = $modulo['idCurso'];
     }
     //Para eliminar una clase
-    //Checamos que no tenga ni imagenes, ni archivos...
+    //Checamos que no tenga ni imagenes, ni archivos, ni videos...
     $canDelete = 0;
     $errorMessage = '';
     if(isset($_POST['eliminar'])){
@@ -67,14 +67,18 @@
             $resultImgs = mysqli_query($conn, $queryImgs);
             $queryBiblio = "SELECT * FROM bibliotecaClase WHERE idClase = $idClase;";
             $resultBiblio = mysqli_query($conn, $queryBiblio);
-            if (mysqli_num_rows($resultImgs)>0 or mysqli_num_rows($resultBiblio)>0) {
+            $queryVideos = "SELECT * FROM videosClase WHERE idClase = $idClase;";
+            $resultVideos = mysqli_query($conn, $queryVideos);
+            if (mysqli_num_rows($resultImgs)>0 or mysqli_num_rows($resultBiblio)>0 or mysqli_num_rows($resultVideos)>0) {
                 $canDelete = 1;
-                $errorMessage = '<p class="text-red-500 text-center">No se puede eliminar, ya que una o mas clases, tienen archivos y/o imagenes sin eliminar.</p>';
+                $errorMessage = '<p class="text-red-500 text-center">No se puede eliminar, ya que una o mas clases, tienen archivos y/o imagenes y/o videos sin eliminar.</p>';
                 break;
             }
         }
         if ($canDelete == 0) {
             foreach ($_POST['idClase'] as $idClase) {
+                $queryVideos = "DELETE FROM videos WHERE idClase = $idClase;";
+                $resultElimVideos = mysqli_query($conn, $queryVideos);
                 $query = "DELETE FROM clases WHERE idClase = $idClase;";
                 $resultElim = mysqli_query($conn, $query);
             }
