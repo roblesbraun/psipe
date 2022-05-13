@@ -1,3 +1,28 @@
+<?php
+    include('connection.php');
+    session_start();
+    $errorMessage = '';
+    //Iniciar sesión
+    if(isset($_POST['submit'])){
+        $usuario = $_POST['username'];
+        $password = $_POST['password'];
+        $query = "SELECT * FROM adminUsuarios WHERE usuario = '$usuario';";
+        $result = mysqli_query($conn, $query);
+        $userInfo = mysqli_fetch_array($result);
+        if ($userInfo) {
+            if ($userInfo['usuario'] == $usuario and $userInfo['password'] == $password) {
+                $_SESSION["login"] = 1;
+                header("Location: dashboard.php");
+            }
+            else {
+                $errorMessage = 'Usuario y/o contraseña incorrectos.';
+            }
+        }
+        else {
+            $errorMessage = 'Usuario y/o contraseña incorrectos.';
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,6 +31,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Manage Log In</title>
         <link rel="stylesheet" href="../tailwind.css">
+        <link rel="icon" href="../img/psipeLogo.png">
     </head>
     <style>
         body{
@@ -16,25 +42,24 @@
     <body class="bg-slate-300">
         <div class="container mx-auto flex h-screen items-center justify-center">
             <div class="w-full max-w-xs">
-                <form class="bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <form class="bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 mb-4" method="post">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                            Username
+                            Usuario
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username">
+                        <input type="text" name="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Username">
                     </div>
                     <div class="mb-6">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                            Password
+                            Contraseña
                         </label>
-                        <input class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password">
+                        <input type="password" name="password" class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" placeholder="Password">
+                        <p class="text-red-500 text-xs text-center"><?php echo $errorMessage?></p>
                     </div>
                     <div class="flex items-center justify-center">
-                        <a href="./dashboard.php">
-                            <button class="bg-psipeBlue hover:bg-psipeDarkGray text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                                Iniciar Sesión
-                            </button>
-                        </a>
+                        <button type="submit" name="submit" class="bg-psipeBlue hover:bg-psipeDarkGray text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Iniciar Sesión
+                        </button>
                     </div>
                 </form>
                 <p class="text-center text-psipeDarkGray text-xs">

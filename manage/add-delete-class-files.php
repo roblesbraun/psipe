@@ -1,4 +1,16 @@
 <?php
+    session_start();
+    if (!(isset($_SESSION["login"]))) {
+        header("Location: login.php");
+    }
+    // else {
+    //     echo $_SESSION["login"];
+    // }
+    //Logout
+    if(isset($_POST['logout'])){
+        session_destroy();
+        header("Location: login.php");
+    }
     include('connection.php');
     $query = "SELECT idCurso FROM cursos ORDER BY idCurso limit 1;";
     $result = mysqli_query($conn, $query);
@@ -108,11 +120,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar/Eliminar Temas de Módulos</title>
+    <title>Agregar/Eliminar archivos de Clase</title>
     <link rel="stylesheet" href="../tailwind.css">
+    <link rel="icon" href="../img/psipeLogo.png">
 </head>
 <body>
-   <!-- Navbar -->
+    <!-- Navbar -->
     <!-- navbar goes here -->
     <nav class="bg-slate-300 shadow-lg">
         <div class="px-3 mx-auto">
@@ -134,7 +147,11 @@
                 <!-- Lado derecho -->
                 <div class="hidden lg:flex items-center space-x-1">
                     <a class="rounded p-2 hover:bg-gray-300 transition duration-500 text-black" href="./dashboard.php">Dashboard</a>
-                    <a class="rounded p-2 hover:bg-gray-300 transition duration-500 text-black" href="#">Cerrar Sesión</a>
+                    <form action="" method="post" class="m-0">
+                        <div>
+                            <button type="submit" name="logout" class="rounded p-2 hover:bg-gray-300 transition duration-500 text-black flex items-center justify-center">Cerrar Sesión</button>
+                        </div>
+                    </form>
                 </div>
                 <!-- Mobile button -->
                 <div class="lg:hidden flex items-center">
@@ -148,8 +165,17 @@
         </div>
         <!-- mobile menu -->
         <div class="mobile-menu hidden lg:hidden p-1">
-            <a href="./dashboard.php" class="text-center block rounded hover:bg-gray-300  py-2 px-2 duration-500 text-black">Dashboard</a>
-            <a href="#" class="rounded p-2 text-center block hover:bg-gray-300 transition duration-500 text-black">Cerrar Sesión</a>
+            <a href="./dashboard.php" class="text-center block rounded hover:bg-gray-300 py-2 px-2 duration-500 text-black">Dashboard</a>
+            <div class="block rounded hover:bg-gray-300">
+                <form action="" method="post" class="flex items-center justify-center m-0">
+                    <button type="submit" name="logout" class="text-center block rounded hover:bg-gray-300 py-2 duration-500 text-black">Cerrar Sesión</button>
+                </form>
+            </div>
+            <!-- <form action="" method="post" class="flex items-center justify-center">
+                <div class="block rounded hover:bg-gray-300 bg">
+                    <button type="submit" name="logout" class="text-center block rounded hover:bg-gray-300 py-2 px-2 duration-500 text-black">Cerrar Sesión</button>
+                </div>
+            </form> -->
         </div>
     </nav>
     <!-- Fin de navbar -->
@@ -263,5 +289,6 @@
             </div>
         </form>
     </div>
+    <script src="../main.js"></script>
 </body>
 </html>
