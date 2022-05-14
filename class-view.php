@@ -124,20 +124,13 @@
         <h1 class="text-3xl text-psipeDarkGray mb-7 text-center"><?php echo $curso['nombre'] ?></h1>
         <h1 class="text-2xl text-psipeBlue mb-2">Modulo: <?php echo $modulo['nombre'] ?></h1>
         <h1 class="text-xl mb-7"><?php echo $clase['nombre'] ?></h1>
-        <h1 class="text-lg">Instrucciones de Clase</h1>
-        <p><?php echo $clase['instrucciones'] ?></p>
+        <p class="mb-3"><?php echo $clase['instrucciones'] ?></p>
         <!-- Container video y biblioteca -->
         <div class="grid sm:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 gap-7 mb-5">
-            <div class="space-y-5">
-                <div>
-                    <h1 class="text-xl text-psipeBlue">Vídeo de la Sesión</h1>
-                    <iframe class="w-full h-64 md:h-64 lg:h-80 rounded-lg" src="<?php echo $clase['video'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <div>
-                    <h1 class="text-xl text-psipeBlue">Presentación</h1>
-                    <iframe src="<?php echo $clase['presentacion'] ?>" frameborder="0" class="w-full h-64 md:h-80 lg:h-80 rounded-lg" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-                </div>
-            </div>    
+            <div>
+                <!-- <h1 class="text-xl text-psipeBlue">Vídeo de la Sesión</h1> -->
+                <iframe class="w-full h-44 md:h-80 lg:h-96 rounded-lg" src="<?php echo $clase['video'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="bg-psipeGreen rounded-lg p-4">
                 <h1 class="text-2xl mb-3">Biblioteca de Clase</h1>
                 <?php
@@ -152,32 +145,27 @@
                             </a>';
                     }
                 ?>
-                <!-- <a href="./download.php?file='.urlencode($archivos['rutaArchivo']).'$carpetaArchivos='./img/bibliotecaClase'">
-                    <p class="flex items-center space-x-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
-                        </svg>
-                        <span>Recurso 1</span>
-                    </p>
-                </a>
-                <p class="flex items-center space-x-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
-                    </svg>
-                    <span>Recurso 2</span>
-                </p> -->
+            </div>
+            <div>
+                <h1 class="text-xl text-psipeBlue">Presentación</h1>
+                <iframe src="<?php echo $clase['presentacion'] ?>" frameborder="0" class="w-full h-48 md:h-80 lg:h-96 rounded-lg" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            </div>
+            <div class="">
+                <?php
+                    if (mysqli_num_rows($resultImagenes)>0) {
+                        echo '<h1 class="text-xl text-center text-black">Imagenes de Clase</h1>';
+                        // echo '<div class="flex flex-nowrap overflow-scroll overflow-y-hidden space-x-7 snap-mandatory snap-x">';
+                        echo '<div class="relative w-full flex gap-6 snap-x snap-proximity overflow-x-auto pb-8">';
+                        while ($imagenes = mysqli_fetch_array($resultImagenes)){
+                            echo '<div class="snap-center shrink-0 first:pl-8 last:pr-8">';
+                                echo '<img src="./img/carruselClase/'.$imagenes['rutaImagen'].'" class="shrink-0 h-44 md:h-80 lg:h-96 rounded-lg shadow-xl">';
+                            echo '</div>';
+                        }
+                        echo '</div>';
+                    }
+                ?>
             </div>
         </div>
-        <?php
-            if (mysqli_num_rows($resultImagenes)>0) {
-                echo '<h1 class="text-xl text-center text-psipeBlue">Imagenes de Clase</h1>';
-                echo '<div class="flex flex-nowrap overflow-scroll overflow-y-hidden space-x-7 snap-mandatory snap-x">';
-                while ($imagenes = mysqli_fetch_array($resultImagenes)){
-                    echo '<img src="./img/carruselClase/'.$imagenes['rutaImagen'].'" class="w-screen snap-center">';
-                }
-                echo '</div>';
-            }
-        ?>
         <?php
             if (mysqli_num_rows($resultVideos)>0) {
                 echo '<h1 class="text-xl text-center text-psipeBlue mt-10">Videos de Clase</h1>';
@@ -185,7 +173,7 @@
                 while ($videos = mysqli_fetch_array($resultVideos)){
                     echo '<div>';
                         echo '<h1 class="text-lg text-center mt-10">'.$videos['nombre'].'</h1>';
-                        echo '<iframe class="w-full h-64 md:h-80 lg:h-80 rounded-lg" src="'.$videos['link'].'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                        echo '<iframe class="w-full h-44 md:h-80 lg:h-96 rounded-lg" src="'.$videos['link'].'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                     echo '</div>';
                 }
                 echo '</div>';
