@@ -64,9 +64,9 @@
         <!-- mobile menu -->
         <div class="mobile-menu hidden lg:hidden p-1">
             <a href="./dashboard.php" class="text-center block rounded hover:bg-gray-300 py-2 px-2 duration-500 text-black">Dashboard</a>
-            <div class="block rounded hover:bg-gray-300">
+            <div class="block rounded hover:bg-gray-300 duration-500">
                 <form action="" method="post" class="flex items-center justify-center m-0">
-                    <button type="submit" name="logout" class="text-center block rounded hover:bg-gray-300 py-2 duration-500 text-black">Cerrar Sesión</button>
+                    <button type="submit" name="logout" class="text-center block rounded py-2 text-black w-full">Cerrar Sesión</button>
                 </form>
             </div>
             <!-- <form action="" method="post" class="flex items-center justify-center">
@@ -124,6 +124,11 @@
             <div class="flex items-center justify-center rounded-xl w-full h-40 bg-center bg-cover saturate-100 shadow-lg shadow-slate-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-500 duration-300" style="background-image: url(../img/andrew-neel-cckf4TsHAuw-unsplash.jpg)">
                 <a href="./manage-courses.php">
                     <h1 class="text-white font-medium tracking-wide text-lg">Inscríbete</h1>
+                </a>
+            </div>
+            <div class="flex items-center justify-center rounded-xl w-full h-40 bg-center bg-cover saturate-100 shadow-lg shadow-slate-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-500 duration-300" style="background-image: url(../img/users.jpg)">
+                <a href="./manage-users.php">
+                    <h1 class="text-white font-medium tracking-wide text-lg">Usuarios</h1>
                 </a>
             </div>
         </div>

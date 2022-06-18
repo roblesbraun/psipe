@@ -1,5 +1,6 @@
 <?php
     include('./manage/connection.php');
+    $carpetaArchivos = './img/bibliotecaClase/';
     $idCurso = $_GET['idCurso'];
     $query = "SELECT * FROM cursos WHERE idCurso = $idCurso";
     $result = mysqli_query($conn, $query);
@@ -13,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles del Curso</title>
     <link rel="stylesheet" href="./tailwind.css">
+    <link rel="icon" href="./img/psipeLogo.png">
 </head>
 <body>
    <!-- Navbar -->
@@ -133,10 +135,25 @@
                     <p class="mb-3">En esta sección encontraras material de apoyo para tu estudio</p>
                     <ul class="list-disc list-inside">
                         <?php
-                            $query = "SELECT * FROM bibliotecaCurso WHERE idCurso = $idCurso";
+                            $query = "SELECT idModulo FROM modulos WHERE idCurso = $idCurso";
                             $result = mysqli_query($conn, $query);
-                            while ($bibliotecas = mysqli_fetch_array($result)){
-                                echo '<li class="mb-3"><a href="./course-library-view.php?idBiblioteca='.$bibliotecas['idBiblioteca'].'&idCurso='.$idCurso.'" class="text-lg underline decoration-transparent decoration-2 hover:decoration-psipeBlue">'.$bibliotecas['nombre'].'</a></li>';
+                            while ($modulos = mysqli_fetch_array($result)) {
+                                $queryMod = "SELECT idClase FROM clases WHERE idModulo = ".$modulos['idModulo']."";
+                                $resultMod = mysqli_query($conn, $queryMod);
+                                while ($clases = mysqli_fetch_array($resultMod)) {
+                                    $queryArchivos = "SELECT nombre, rutaArchivo FROM bibliotecaClase WHERE idClase = ".$clases['idClase'].";";
+                                    $resultArchivos = mysqli_query($conn, $queryArchivos);
+                                    while ($archivos = mysqli_fetch_array($resultArchivos)){
+                                        echo '<a href="./download.php?file='.urlencode($archivos['rutaArchivo']).'&carpetaArchivos='.$carpetaArchivos.'">
+                                                <p class="flex items-center space-x-3">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
+                                                    </svg>
+                                                    <span>'.$archivos['nombre'].'</span>
+                                                </p>
+                                            </a>';
+                                    }
+                                }
                             }
                         ?>
                     </ul>

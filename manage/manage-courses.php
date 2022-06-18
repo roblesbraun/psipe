@@ -81,7 +81,7 @@
         <h1 class="text-2xl text-center">Administrar Cursos</h1>
         <!-- Cursos -->
         <h1 class="text-xl">Cursos</h1>
-        <div class="grid grid-cols-4 gap-5 justify-items-start">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5 justify-items-center md:justify-items-start">
             <a href="./add-delete-course.php">
                 <div class="h-44 w-32 rounded-xl bg-gray-300 flex flex-col space-y-8 justify-center items-center shadow duration-300 hover:bg-gray-100 hover:shadow-xl hover:-translate-y-1 p-3">
                     <div class="bg-psipeGreen rounded-full h-14 w-14 flex items-center justify-center">
@@ -105,7 +105,7 @@
         </div>
         <!-- Biblitecas -->
         <h1 class="text-xl">Biblioteca de Cursos</h1>
-        <div class="grid grid-cols-4 gap-5 justify-items-start">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5 justify-items-center md:justify-items-start">
             <a href="./add-delete-course-library.php">
                 <div class="h-44 w-32 rounded-xl bg-gray-300 flex flex-col space-y-8 justify-start items-center shadow duration-300 hover:bg-gray-100 hover:shadow-xl hover:-translate-y-1 p-3">
                     <div class="bg-psipeGreen rounded-full h-14 w-14 flex items-center justify-center">
@@ -139,7 +139,7 @@
         </div>
         <!-- Modulos -->
         <h1 class="text-xl">Modulos</h1>
-        <div class="grid grid-cols-4 gap-5 justify-items-start">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5 justify-items-center md:justify-items-start">
             <a href="./add-delete-modules.php">
                 <div class="h-44 w-32 rounded-xl bg-gray-300 flex flex-col space-y-8 justify-start items-center shadow duration-300 hover:bg-gray-100 hover:shadow-xl hover:-translate-y-1 p-3">
                     <div class="bg-psipeGreen rounded-full h-14 w-14 flex items-center justify-center">
@@ -183,7 +183,7 @@
         </div>
         <!-- Clases-->
         <h1 class="text-xl">Clases</h1>
-        <div class="grid grid-cols-4 gap-5 justify-items-start">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5 justify-items-center md:justify-items-start">
             <a href="./add-delete-classes.php">
                 <div class="h-44 w-32 rounded-xl bg-gray-300 flex flex-col space-y-8 justify-start items-center shadow duration-300 hover:bg-gray-100 hover:shadow-xl hover:-translate-y-1 p-3">
                     <div class="bg-psipeGreen rounded-full h-14 w-14 flex items-center justify-center">

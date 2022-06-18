@@ -153,7 +153,6 @@
             <div class="">
                 <?php
                     if (mysqli_num_rows($resultImagenes)>0) {
-                        echo '<h1 class="text-xl text-center text-black">Imagenes de Clase</h1>';
                         // echo '<div class="flex flex-nowrap overflow-scroll overflow-y-hidden space-x-7 snap-mandatory snap-x">';
                         echo '<div class="relative w-full flex gap-6 snap-x snap-proximity overflow-x-auto pb-8">';
                         while ($imagenes = mysqli_fetch_array($resultImagenes)){

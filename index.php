@@ -67,6 +67,7 @@
                     <a href="./contacto.php" class="py-2 px-3 text-black rounded hover:bg-gray-300 hover:text-black transition duration-500">Contacto</a>
                     <?php
                         if ((isset($_SESSION["login"]))) {
+                            echo $_SESSION["login"];
                             echo '<form action="" method="post" class="m-0">
                                     <button name="logout" class="py-2 px-3 text-black rounded hover:bg-gray-300 hover:text-black transition duration-500">Cerrar Sesión</button>
                                 </form>';
@@ -129,7 +130,7 @@
         </div>
     </nav>
     <!-- Fin de navbar -->
-
+                
     <!-- WhatsApp Button -->
     <div class="container mx-auto p-10">
         <a href="https://wa.me/525569158438" class="fixed w-12 h-12 bg-psipeBlue bottom-5 right-5 rounded-full flex justify-center items-center z-10 shadow-lg shadow-slate-500 hover:-translate-y-1 hover:shadow-md hover:shadow-slate-500 duration-300" target="_blank">
