@@ -67,7 +67,6 @@
                     <a href="./contacto.php" class="py-2 px-3 text-black rounded hover:bg-gray-300 hover:text-black transition duration-500">Contacto</a>
                     <?php
                         if ((isset($_SESSION["login"]))) {
-                            echo $_SESSION["login"];
                             echo '<form action="" method="post" class="m-0">
                                     <button name="logout" class="py-2 px-3 text-black rounded hover:bg-gray-300 hover:text-black transition duration-500">Cerrar Sesión</button>
                                 </form>';

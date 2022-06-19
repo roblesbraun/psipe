@@ -155,11 +155,12 @@
                                 </p>
                             </div>
                             <div class="px-6 pt-4 pb-5">
-                                <a href="./course-view.php?idCurso='.$cursos['idCurso'].'" class="bg-psipeBlue hover:hover:bg-psipeGray text-white font-bold py-2 px-4 rounded-full">
+                                <a href="#" class="bg-psipeBlue hover:hover:bg-psipeGray text-white font-bold py-2 px-4 rounded-full">
                                     Ver Más
                                 </a>
                             </div>
                         </div>';
+                    // <a href="./course-view.php?idCurso='.$cursos['idCurso'].'" class="bg-psipeBlue hover:hover:bg-psipeGray text-white font-bold py-2 px-4 rounded-full">Ver Más</a>
                 }
             ?>
         </div>

@@ -67,7 +67,6 @@
                     <a href="./contacto.php" class="py-2 px-3 text-black rounded hover:bg-gray-300 hover:text-black transition duration-500">Contacto</a>
                     <?php
                         if ((isset($_SESSION["login"]))) {
-                            echo $_SESSION["login"];
                             echo '<form action="" method="post" class="m-0">
                                     <button name="logout" class="py-2 px-3 text-black rounded hover:bg-gray-300 hover:text-black transition duration-500">Cerrar Sesión</button>
                                 </form>';
@@ -137,29 +136,33 @@
         <!-- Course Cards Container-->
         <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-5 justify-items-center">
             <?php
-                $query = "SELECT idCurso, nombre, docente, duracion, rutaImagen FROM cursos ORDER BY idCurso;";
+                $query = "SELECT id_curso FROM usuariosCursos WHERE id_usuario = ".$_SESSION['idUser'].";";
                 $result = mysqli_query($conn, $query);
-                while ($cursos = mysqli_fetch_array($result)){
-                    echo '<div class="w-80 rounded-lg overflow-hidden shadow-lg duration-500 bg-gray-100 hover:shadow-2xl hover:-translate-y-2 hover:scale-80">
-                            <img class="w-80 h-64 rounded-lg rounded-b-none" src="./img/cursos/'.$cursos['rutaImagen'].'">
-                            <div class="px-6 py-4">
-                                <div class="font-bold text-xl mb-2">'.$cursos['nombre'].'</div>
-                                <p class="text-gray-700 text-base">
-                                    Duración: '.$cursos['duracion'].' horas 
-                                </p>
-                                <p class="text-gray-700 text-base">
-                                    Imparte: '.$cursos['docente'].'
-                                </p>
-                                <p class="text-gray-700 text-base">
-                                    <a href="./docentes.php">Conoce a nuestra ponente</a>
-                                </p>
-                            </div>
-                            <div class="px-6 pt-4 pb-5">
-                                <a href="./course-view.php?idCurso='.$cursos['idCurso'].'" class="bg-psipeBlue hover:hover:bg-psipeGray text-white font-bold py-2 px-4 rounded-full">
-                                    Ver Más
-                                </a>
-                            </div>
-                        </div>';
+                while ($idCursos = mysqli_fetch_array($result)) {
+                    $queryCourseDetails = "SELECT * FROM cursos WHERE idCurso = ".$idCursos['id_curso'].";";
+                    $resultCourseDetails = mysqli_query($conn, $queryCourseDetails);
+                    while ($cursos = mysqli_fetch_array($resultCourseDetails)){
+                        echo '<div class="w-80 rounded-lg overflow-hidden shadow-lg duration-500 bg-gray-100 hover:shadow-2xl hover:-translate-y-2 hover:scale-80">
+                                <img class="w-80 h-64 rounded-lg rounded-b-none" src="./img/cursos/'.$cursos['rutaImagen'].'">
+                                <div class="px-6 py-4">
+                                    <div class="font-bold text-xl mb-2">'.$cursos['nombre'].'</div>
+                                    <p class="text-gray-700 text-base">
+                                        Duración: '.$cursos['duracion'].' horas 
+                                    </p>
+                                    <p class="text-gray-700 text-base">
+                                        Imparte: '.$cursos['docente'].'
+                                    </p>
+                                    <p class="text-gray-700 text-base">
+                                        <a href="./docentes.php">Conoce a nuestra ponente</a>
+                                    </p>
+                                </div>
+                                <div class="px-6 pt-4 pb-5">
+                                    <a href="./course-view.php?idCurso='.$cursos['idCurso'].'" class="bg-psipeBlue hover:hover:bg-psipeGray text-white font-bold py-2 px-4 rounded-full">
+                                        Ver Más
+                                    </a>
+                                </div>
+                            </div>';
+                    }
                 }
             ?>
         </div>

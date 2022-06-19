@@ -78,40 +78,28 @@
         </div>
     </nav>
     <!-- Fin de navbar -->
-    <div class="container mx-auto p-10 space-y-8">
-        <h1 class="text-2xl text-center">Administrar Usuarios</h1>
-        <!-- Cursos -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-5 justify-items-center md:justify-items-start">
-            <a href="./add-delete-users.php">
-                <div class="h-44 w-32 rounded-xl bg-gray-300 flex flex-col space-y-8 justify-center items-center shadow duration-300 hover:bg-gray-100 hover:shadow-xl hover:-translate-y-1 p-3">
-                    <div class="bg-psipeGreen rounded-full h-14 w-14 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="p">
-                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
-                        </svg>
-                    </div>
-                    <p class="text-center text-xs lg:text-base md:text-sm mt-2">Agregar/Eliminar Usuarios</p>
+    <div class="container mx-auto p-10 flex flex-col items-center">
+        <div class="space-y-10">
+            <h1 class="text-2xl text-center mt-20">Administración de Usuarios y sus Cursos</h1>
+            <!-- Cursos -->
+            <form method="post" class="space-y-10" action="edit-user-courses.php">
+                <div class="mb-6 w-full">
+                    <label for="user" class="block mb-2 text-sm font-medium text-psipeGray">Usuario</label>
+                    <input name="correo" list="users" id="user" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                 </div>
-            </a>
-            <a href="./edit-users.php">
-                <div class="h-44 w-32 rounded-xl bg-gray-300 flex flex-col space-y-8 justify-center items-center shadow duration-300 hover:bg-gray-100 hover:shadow-xl hover:-translate-y-1 p-3">
-                    <div class="bg-psipeGreen rounded-full h-14 w-14 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                        </svg>
-                    </div>
-                    <p class="text-center text-xs lg:text-base md:text-sm mt-2">Editar Usuarios</p>
+                <div class="flex justify-center space-x-3">
+                    <button type="submit" name="submit" class="text-white bg-psipeBlue hover:bg-psipeGreen font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Siguiente</button>
                 </div>
-            </a>
-            <a href="./select-user.php">
-                <div class="h-44 w-32 rounded-xl bg-gray-300 flex flex-col space-y-8 justify-center items-center shadow duration-300 hover:bg-gray-100 hover:shadow-xl hover:-translate-y-1 p-3">
-                    <div class="bg-psipeGreen rounded-full h-14 w-14 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-                        </svg>
-                    </div>
-                    <p class="text-center text-xs lg:text-xs md:text-sm mt-2">Agregar/Elimnar Cursos a Usuarios</p>
-                </div>
-            </a>
+                <datalist id="users">
+                    <?php
+                        $query = "SELECT correo FROM usuarios;";
+                        $result = mysqli_query($conn, $query);
+                        while ($correos = mysqli_fetch_array($result)) {
+                            echo '<option value="'.$correos['correo'].'">';
+                        }
+                    ?>
+                </datalist>
+            </form>
         </div>
     </div>
     <script src="../main.js"></script>

@@ -18,6 +18,7 @@
             $verify = password_verify($password, $hashedPassword);
             if ($userInfo['correo'] == $email and $verify) {
                 $_SESSION["login"] = 1;
+                $_SESSION["idUser"] = $userInfo['id_usuario'];
                 header("Location: index.php");
             }
             else {
