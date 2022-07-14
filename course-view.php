@@ -1,6 +1,10 @@
 <?php
     include('./manage/connection.php');
     session_start();
+    //Si no esta iniciada la sesion, te redirige a la pagina de login
+    if (!(isset($_SESSION["login"]))) {
+        header("Location: login.php");
+    }
     //Logout
     if(isset($_POST['logout'])){
         session_destroy();
@@ -35,7 +39,7 @@
         <h1 class="text-3xl text-center"><?php echo $curso['nombre'] ?></h1>
         <!-- Container tablas, biblioteca, sesiones en vivo -->
         <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 md:grid-cols-2 justify-center mt-7">
-            <table class="rounded-t-lg w-full mx-auto bg-psipeGreen text-gray-800 text-center text-sm">
+            <table class="table-auto rounded-t-lg w-full mx-auto bg-psipeGreen text-gray-800 text-center text-sm h-72">
                 <tr class="border-b-2 border-gray-300">
                     <th class="px-4 py-3">Imparte</th>
                     <th class="px-4 py-3"><?php echo $curso['docente'] ?></th>
@@ -72,12 +76,12 @@
                                     $queryArchivos = "SELECT nombre, rutaArchivo FROM bibliotecaClase WHERE idClase = ".$clases['idClase'].";";
                                     $resultArchivos = mysqli_query($conn, $queryArchivos);
                                     while ($archivos = mysqli_fetch_array($resultArchivos)){
-                                        echo '<a href="./download.php?file='.urlencode($archivos['rutaArchivo']).'&carpetaArchivos='.$carpetaArchivos.'">
-                                                <p class="flex items-center space-x-3">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
-                                                        <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
-                                                    </svg>
-                                                    <span>'.$archivos['nombre'].'</span>
+                                        echo '<a href="./download.php?file='.urlencode($archivos['rutaArchivo']).'&carpetaArchivos='.$carpetaArchivos.'" class="flex space-x-4">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue flex-none" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
+                                                </svg>
+                                                <p class="flex items-center text-clip">
+                                                    '.$archivos['nombre'].'
                                                 </p>
                                             </a>';
                                     }
@@ -87,7 +91,7 @@
                     </ul>
                 </div>
                 <div class="">
-                    <table class="rounded-t-lg w-full mx-auto bg-psipeGreen text-gray-800 text-center text-sm">
+                    <table class="rounded-t-lg w-full mx-auto mb-0 bg-psipeGreen text-gray-800 text-center text-sm">
                         <tr class="border-b-2 border-gray-300 col-span-2">
                             <th class="px-4 py-3" colspan="2">Sesiones en vivo</th>
                         </tr>
@@ -112,7 +116,7 @@
                         $resultTemarios = mysqli_query($conn, $queryTemarios);
                         while ($temas = mysqli_fetch_array($resultTemarios)) {
                             echo '<p class="flex items-center space-x-3">';
-                                echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">';
+                                echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue flex-none" viewBox="0 0 20 20" fill="currentColor">';
                                     echo '<path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />';
                                 echo '</svg>';
                                 echo '<span>'.$temas['nombre'].'</span>';

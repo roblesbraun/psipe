@@ -1,6 +1,10 @@
 <?php
     include('./manage/connection.php');
     session_start();
+    //Si no esta iniciada la sesion, te redirige a la pagina de login
+    if (!(isset($_SESSION["login"]))) {
+        header("Location: login.php");
+    }
     //Logout
     if(isset($_POST['logout'])){
         session_destroy();
