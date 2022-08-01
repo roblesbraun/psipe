@@ -38,8 +38,8 @@
         </a>
         <h1 class="text-3xl text-center"><?php echo $curso['nombre'] ?></h1>
         <!-- Container tablas, biblioteca, sesiones en vivo -->
-        <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 md:grid-cols-2 justify-center mt-7">
-            <table class="table-auto rounded-t-lg w-full mx-auto bg-psipeGreen text-gray-800 text-center text-sm h-72">
+        <div class="flex flex-col gap-5 mt-8 justify-center md:flex-row lg:flex-row">
+            <table class="table-auto rounded-t-lg w-full bg-psipeGreen text-gray-800 text-center text-sm h-72 md:w-1/2 lg:w-1/2">
                 <tr class="border-b-2 border-gray-300">
                     <th class="px-4 py-3">Imparte</th>
                     <th class="px-4 py-3"><?php echo $curso['docente'] ?></th>
@@ -61,34 +61,15 @@
                     <td class="px-4 py-3"><?php echo $curso['horasAsincronas'] ?></td>
                 </tr>
             </table>
-            <div class="grid grid-rows-2 space-y-4">
+            <div class="flex flex-col gap-5 w-full md:w-1/2 lg:w-1/2">
                 <div class="bg-psipeGreen rounded-lg p-5 flex flex-col">
-                    <h1 class="text-2xl">Biblioteca</h1>
-                    <p class="mb-3">En esta sección encontraras material de apoyo para tu estudio</p>
-                    <ul class="list-disc list-inside">
-                        <?php
-                            $query = "SELECT idModulo FROM modulos WHERE idCurso = $idCurso";
-                            $result = mysqli_query($conn, $query);
-                            while ($modulos = mysqli_fetch_array($result)) {
-                                $queryMod = "SELECT idClase FROM clases WHERE idModulo = ".$modulos['idModulo']."";
-                                $resultMod = mysqli_query($conn, $queryMod);
-                                while ($clases = mysqli_fetch_array($resultMod)) {
-                                    $queryArchivos = "SELECT nombre, rutaArchivo FROM bibliotecaClase WHERE idClase = ".$clases['idClase'].";";
-                                    $resultArchivos = mysqli_query($conn, $queryArchivos);
-                                    while ($archivos = mysqli_fetch_array($resultArchivos)){
-                                        echo '<a href="./download.php?file='.urlencode($archivos['rutaArchivo']).'&carpetaArchivos='.$carpetaArchivos.'" class="flex space-x-4">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue flex-none" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
-                                                </svg>
-                                                <p class="flex items-center text-clip">
-                                                    '.$archivos['nombre'].'
-                                                </p>
-                                            </a>';
-                                    }
-                                }
-                            }
-                        ?>
-                    </ul>
+                    <h1 class="text-2xl mb-3">Biblioteca</h1>
+                    <a href="./course-library-view.php?idCurso=<?php echo $idCurso?>" class="flex items-center space-x-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue inline flex-none" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
+                        </svg>
+                        <p>En esta sección encontraras material de apoyo de todo el diplomado. Haz clic aquí.</p>
+                    </a>
                 </div>
                 <div class="">
                     <table class="rounded-t-lg w-full mx-auto mb-0 bg-psipeGreen text-gray-800 text-center text-sm">

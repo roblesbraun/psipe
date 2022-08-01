@@ -57,7 +57,7 @@
         <h1 class="text-xl mb-7"><?php echo $clase['nombre'] ?></h1>
         <p class="mb-3"><?php echo $clase['instrucciones'] ?></p>
         <!-- Container video y biblioteca -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 gap-7 mb-5">
+        <div class="grid sm:grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mb-5">
             <div>
                 <!-- <h1 class="text-xl text-psipeBlue">Vídeo de la Sesión</h1> -->
                 <iframe class="w-full h-44 md:h-80 lg:h-96 rounded-lg" src="<?php echo $clase['video'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -66,12 +66,12 @@
                 <h1 class="text-2xl mb-3">Biblioteca de Clase</h1>
                 <?php
                     while ($archivos = mysqli_fetch_array($result)){
-                        echo '<a href="./download.php?file='.urlencode($archivos['rutaArchivo']).'&carpetaArchivos='.$carpetaArchivos.'">
-                                <p class="flex items-center space-x-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
-                                    </svg>
-                                    <span>'.$archivos['nombre'].'</span>
+                        echo '<a href="./download.php?file='.urlencode($archivos['rutaArchivo']).'&carpetaArchivos='.$carpetaArchivos.'" class="flex space-x-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-psipeBlue flex-none" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
+                                </svg>
+                                <p class="flex items-center text-clip">
+                                    '.$archivos['nombre'].'
                                 </p>
                             </a>';
                     }
