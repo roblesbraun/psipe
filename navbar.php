@@ -1,13 +1,13 @@
 <!-- Navbar -->
 <!-- navbar goes here -->
 <nav class="bg-psipeGreen">
-    <div class="px-3 mx-auto">
+    <div class="px-3 mx-auto shadow-lg">
         <div class="flex justify-between">
             <!-- Recordar agrupar en contenedores las cosas que queremos que vayan del lado izquierdo y derecho -->
             <!-- Lado izquierdo -->
             <div class="flex space-x-4">
                 <!-- Logo -->
-                <a href="index.php" class="flex items-center py-5 px-2 text-gray-200 divide-x divide-black">
+                <a href="index.php" class="flex items-center py-3 px-2 text-gray-200 divide-x divide-black">
                     <img src="./img/psipeLogo.png" alt="" class="mr-2 w-14">
                     <span class="pl-2 font-extrabold text-black">Psipe</span>
                 </a>
@@ -66,8 +66,16 @@
             </div>
         </div>
     </div>
+    <div class="hidden lg:flex bg-green-700/25 px-5 py-0.5 space-x-3 justify-end shadow-lg">
+        <a href="" class="hover:text-slate-50 duration-300">Psicología</a>
+        <a href="" class="hover:text-slate-50 duration-300">Psicoanálisis</a>
+        <a href="" class="hover:text-slate-50 duration-300">Pedagogía</a>
+        <a href="" class="hover:text-slate-50 duration-300">Psicopedagogía</a>
+        <a href="" class="hover:text-slate-50 duration-300">Logopedia</a>
+        <a href="" class="hover:text-slate-50 duration-300">Neurociencias</a>
+    </div>
     <!-- mobile menu -->
-    <div class="mobile-menu hidden lg:hidden p-1">
+    <div class="mobile-menu hidden lg:hidden p-1 shadow-lg">
         <a href="./index.php" class="text-center block rounded hover:bg-gray-300  py-2 px-2 duration-500 text-black">Inicio</a>
         <a href="./psipe.php" class="rounded p-2 text-center block hover:bg-gray-300 transition duration-500 text-black">Psipe</a>
         <a href="./clinica.php" class="text-center block rounded hover:bg-gray-300 p-2 mx-1 text-black duration-500">Clínica</a>

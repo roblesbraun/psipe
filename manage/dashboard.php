@@ -131,6 +131,11 @@
                     <h1 class="text-white font-medium tracking-wide text-lg">Usuarios</h1>
                 </a>
             </div>
+            <div class="flex items-center justify-center rounded-xl w-full h-40 bg-center bg-cover saturate-100 shadow-lg shadow-slate-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-500 duration-300" style="background-image: url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1474&q=80')">
+                <a href="./edit-whatsapp.php">
+                    <h1 class="text-white font-medium tracking-wide text-lg">WhatsApp</h1>
+                </a>
+            </div>
         </div>
     </div>
     <script src="../main.js"></script>
