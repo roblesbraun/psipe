@@ -66,13 +66,13 @@
             </div>
         </div>
     </div>
-    <div class="hidden lg:flex bg-green-700/25 px-5 py-0.5 space-x-3 justify-end shadow-lg">
-        <a href="" class="hover:text-slate-50 duration-300">Psicología</a>
-        <a href="" class="hover:text-slate-50 duration-300">Psicoanálisis</a>
-        <a href="" class="hover:text-slate-50 duration-300">Pedagogía</a>
-        <a href="" class="hover:text-slate-50 duration-300">Psicopedagogía</a>
-        <a href="" class="hover:text-slate-50 duration-300">Logopedia</a>
-        <a href="" class="hover:text-slate-50 duration-300">Neurociencias</a>
+    <div class="flex flex-wrap bg-green-700/25 px-5 py-0.5 space-x-3 justify-end shadow-lg">
+        <a href="./psicologia.php" class="hover:text-slate-50 duration-300 text-xs md:text-base">Psicología</a>
+        <a href="./psicoanalisis.php" class="hover:text-slate-50 duration-300 text-xs md:text-base">Psicoanálisis</a>
+        <a href="./pedagogia.php" class="hover:text-slate-50 duration-300 text-xs md:text-base">Pedagogía</a>
+        <a href="./psicopedagogia.php" class="hover:text-slate-50 duration-300 text-xs md:text-base">Psicopedagogía</a>
+        <a href="./logopedia.php" class="hover:text-slate-50 duration-300 text-xs md:text-base">Logopedia</a>
+        <a href="./neurociencias.php" class="hover:text-slate-50 duration-300 text-xs md:text-base">Neurociencias</a>
     </div>
     <!-- mobile menu -->
     <div class="mobile-menu hidden lg:hidden p-1 shadow-lg">

@@ -82,7 +82,7 @@
         <h1 class="text-center text-3xl mb-10">Dashboard</h1>
         <div class="grid grid-cols-2 lg:grid-cols-5 gap-8">
             <div class="flex items-center justify-center rounded-xl w-full h-40 bg-center bg-cover saturate-100 shadow-lg shadow-slate-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-500 duration-300" style="background-image: url(../img/inicio.jpg)">
-                <a href="">
+                <a href="./edit-home-carousel.php">
                     <h1 class="text-white font-medium tracking-wide text-lg">Inicio</h1>
                 </a>
             </div>

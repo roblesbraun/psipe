@@ -25,10 +25,27 @@
 </head>
 <body>
     <!-- Main container -->
+    <img src="./img/headerPsipe.png" alt="Logo instituto Psipe" class="w-full">
     <div class="container mx-auto p-10">
-        <h1 class="text-5xl text-psipeDarkGray mb-7 text-center">Cursos</h1>
+        <p>
+            Consideramos la supervisión como uno de los pilares principales en el aprendizaje de
+            disciplinas como el psicoanálisis, la psicología y la psicopedagogía.<br><br>
+
+            Existen diversas metodologías que, según el caso, será necesario desarrollar y aplicar,
+            éstas suelen requerir de amplios procesos formativos y una constante actualización.<br><br>
+
+            La super-visión permite obtener una perspectiva diferente por parte de un profesionista
+            sumamente capacitado en el campo; en un espacio nuevo se establece un lugar de análisis, intercambio y crecimiento; en donde se mira de manera objetiva el trabajo
+            realizado, se descubren nuevos panoramas y se desarrollan elementos para sobrellevar
+            de manera asertiva y efectiva los desafíos que surgen en la intervención; fortaleciendo
+            el ejercicio profesional.<br><br>
+
+            Generamos espacios de supervisión tanto individual como grupal, en las modalidades online y
+            presencial. Los espacios se van abriendo de la mano a nuestros diplomados.
+        </p>
         <!-- Course Cards Container-->
-        <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-5 justify-items-center">
+        <h1 class="font-bold text-3xl mt-7">Cursos que impartimos...</h1>
+        <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-5 justify-items-center mt-3">
             <?php
                 $query = "SELECT idCurso, nombre, docente, duracion, rutaImagen FROM cursos ORDER BY idCurso;";
                 $result = mysqli_query($conn, $query);

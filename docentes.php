@@ -24,7 +24,47 @@
     <?php require_once("./navbar.php"); ?>
 </head>
 <body>
-    
+    <!-- Main Container -->
+    <div class="container mx-auto p-10">
+        <h1 class="font-bold text-2xl">Nuestros <span class="text-psipeBlue">docentes</span></h1>
+        <div class="flex justify-around flex-wrap mt-7">
+            <div class="flex flex-col m-5">
+                <img src="./img/docentes.jpg" class="rounded-lg w-64 shadow-md" alt="">
+                <h1 class="text-psipeBlue font-bold">Docente 1</h1>
+                <p>
+                    Información del docente...
+                </p>
+            </div>
+            <div class="flex flex-col m-5">
+                <img src="./img/docentes.jpg" class="rounded-lg w-64 shadow-md" alt="">
+                <h1 class="text-psipeBlue font-bold">Docente 1</h1>
+                <p>
+                    Información del docente...
+                </p>
+            </div>
+            <div class="flex flex-col m-5">
+                <img src="./img/docentes.jpg" class="rounded-lg w-64 shadow-md" alt="">
+                <h1 class="text-psipeBlue font-bold">Docente 1</h1>
+                <p>
+                    Información del docente...
+                </p>
+            </div>
+            <div class="flex flex-col m-5">
+                <img src="./img/docentes.jpg" class="rounded-lg w-64 shadow-md" alt="">
+                <h1 class="text-psipeBlue font-bold">Docente 1</h1>
+                <p>
+                    Información del docente...
+                </p>
+            </div>
+            <div class="flex flex-col m-5">
+                <img src="./img/docentes.jpg" class="rounded-lg w-64 shadow-md" alt="">
+                <h1 class="text-psipeBlue font-bold">Docente 1</h1>
+                <p>
+                    Información del docente...
+                </p>
+            </div>
+        </div>
+    </div>
 
     <!-- WhatsApp Button -->
     <div class="container mx-auto p-10">
@@ -33,6 +73,8 @@
         </a>
     </div>
     <script src="./main.js"></script>
+    <script src="./tabs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
     <?php require_once("./footer.php"); ?>
 </body>
 </html>
