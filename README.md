@@ -17,4 +17,4 @@ Finalmente, todos los archivos que se encuentran en el directorio raíz, son los
 
 ---
 ## Estructura de la base de datos
-![](./img/2022-09-26-12-47-45.png)
+![](./img/bd.png)
