@@ -25,7 +25,7 @@ Finalmente, todos los archivos que se encuentran en el directorio raíz, son los
 ## Instalación del repo
 1. Clonar el repositorio
 ```
-https://github.com/roblesbraun/psipe.git
+git clone https://github.com/roblesbraun/psipe.git
 ```
 2. Instalar dependencias
 ```
